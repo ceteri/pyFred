@@ -1,0 +1,137 @@
+JRL programming QuickStart Revision 09/09/99
+Copyright (C) 1999 Robby Glen Garner
+
+See the file jfred.dat for examples of JFRED programming.
+
+Rule Types:
+
+action:
+   <response template>
+
+The action rule contains the reply text and may be in the form of
+an optional list of URL's that are rendered as links in some fashion,
+AND *one* of a series of text responses that may contain embedded html
+code.
+
+The action rule, when selected, shows all of the URL's listed, and picks
+the text replies in numerical order, with the beginning text for each
+action being selected randomly at conversation startup.
+
+A typical action rule would look like:
+
+action:	HELLO
+	priority: 7
+	Hi there.
+	Hello, who are you?
+	Greetings.
+
+In the above rule, the priority is set to 7. The choice for this
+value is relative to the values in all the other rules. Feel free
+to experiment. The higher the priority, the greater the likelyhood
+that the rule will be chosen. Rules are also discriminated against
+if they have been used recently. With the repeat: false option
+mentioned, the rule will only be used once per conversation.
+
+************Important***********
+Note that the token "action:" is separated by a Tab Character (ASCII
+#9). The tab character is also used to begin the line of every line following
+the "action:" token.  Be sure to edit JRL files with a text editor that wont
+trash your tab characters or replace them with spaces. In Unix or Linux, you
+should have no problem with vi, or emacs, etc.  GNU emacs is available for
+windows, or you can use wordpad, but the dos Edit program does not handle the
+tab charcters properly so don't use that.
+
+
+
+intro phrases
+
+The intro rule is a list of alternate response text prefaces, that
+are chosen at random. The system expects at least one intro rule.
+
+
+Fuzzy Rules
+
+A fuzzy rule is used to select a phrase based on the usage of a
+key word, and fuzzy logic.
+
+action:	BATMAN
+	priority: 8
+	Batman is one of my favorite dudes!
+
+fuzzy: BAT
+	10	BATMAN
+
+Here the fuzzy rule implements a 10% probability of selection
+of the action rule "BATMAN" if someone says something
+similar to "BAT."
+
+regular expression list
+
+The regex rule provides a
+means for selection most rules.
+It has the form:
+
+regex:	SAYBATMAN
+	invokes: BATMAN
+	batman
+	bat cave
+	the riddler
+	robin
+	bat girl
+
+Here the action rule "BATMAN" will be selected based on the presence
+one of the strings listed after the "invokes" option.
+The strings must be typed in lower case with no punctuation.
+
+Notice the tab character
+preceding everything but the "regex:" rule. The "regex:" rule is separated
+from the regex rule's name by a tab character.
+
+
+Rule Elements:
+
+priority:
+rule sorting priority
+
+should be selected as a plan for the general priority of the rules
+in your ruleset file.
+
+requires:
+a prerequisite property for using the rule
+
+properties are things like $nickname, or $email and
+are variables which may be used in a regex: rule to mine data
+from the conversation.
+
+equals:
+a prerequisite name/value pair for uses the value of a property
+to select an action: rule
+
+bind:
+anchor word to bind the rephrased stimulus
+
+Used in a sentence like "I was wondering if [], now I know for sure"
+where the input-phrase-snippet used will be begin with the word
+following the one mentioned in bind:.
+
+invokes:
+action rule indicated by regular expression match
+
+url:
+related URL to display
+
+you may list as many url: rules after an action: rule as you need.
+Depending on platform and delivery method, these will either be rendered
+as links in html, or represented by buttons on a GUI, or you will be
+prompted if you want to spawn your web browser to view each of them.
+
+next:
+sequence to this list of next action rules
+
+The next: rule can contain one or more rules that will have added
+priority as the next reply.
+
+repeat:
+Indicates that the action rule can repeat immediately after being
+invoked.
+

@@ -1,0 +1,4982 @@
+###
+### JFRED (C) 1997-2004 Robby Glen Garner and Paco Xander Nathan
+###
+### Edition: February 23rd, 2004.
+###
+###
+### Rule Types:
+###
+###  action	response template list
+###  intro	intro phrases
+###  fuzzy	word test for fuzzy sets
+###  regex	regular expression list
+###  text	text file paragraph selections
+###
+### Rule Elements:
+###
+###  priority	rule sorting priority
+###  requires	a prerequisite property for using the rule
+###  equals	a prerequisite name/value pair for using the rule
+###  bind	anchor word to bind the rephrased stimulus
+###  invokes	action rule indicated by regular expression match
+###  url	related URL to display
+###  next	sequence to this list of next action rules
+###  repeat	can repeat immediately after being invoked
+###  expect	uses branching logic
+###  response	lists types of responses
+### Caveats:
+###  each ruleset needs to have at least one action rule
+###  and one intro rule to be able to load.
+
+### the first rule is for starting topics...
+
+action:	TOPIC
+	priority: 2
+	I'm afraid I don't follow you.
+	Could you be more specific?
+	I didn't understand that.
+	Sorry, I'm not with you.
+	Could you rephrase that?
+	You're not making sense.
+	That does not compute.
+	Do what?
+	I'd like to help you, but I just don't get it.
+	Huh?
+	Are you serious?
+
+### here are some intro phrases
+
+intro:	INTRO1
+	Look,
+	Actually,
+	Ideally,
+	Heck,
+	Well basically,
+
+action:	DEFAULT
+	priority: 9
+	So you're curious what I'll say if you just press return?
+	Press RETURN again, I dare you!
+	Okay, stop doing that!
+
+## questions to use for the Interrogation of the earthlings
+
+action: IRP
+	priority: 2
+	What exactly do you mean by that?
+	I just thought I might ask...
+	What's that supposed to mean?
+
+response: ANSWER_YES
+	yes
+	yeah
+	yep
+	okay
+	sure
+	why not
+	great
+	ok
+	okay
+	certainly
+	alright
+	affirmative
+	ya
+	yah
+	otay
+	roger
+	alrighty
+	duh
+	probably
+	most likely
+	absolutely
+	right
+	gotcha
+	fine
+	you bet
+	do so
+	deal
+	
+response:	IDONTKNOW
+	i dont know
+	i don't know
+	i don t know
+	you got me
+	dont know
+	dunno
+	i dunno
+	who cares	
+
+
+response: ANSWER_NO
+	no
+	nope
+	not really
+	never
+	i do not think so
+	i do not know
+	maybe
+	sometimes
+	might
+	could
+
+
+action:	TRANSCRIPT
+	priority: 7
+	There is a transcript, but I won't show it to you.
+	That's for me to know and for you to wonder about.
+	Can't you remember what we talked about?
+
+regex:	NOTRANSCRIPT
+	invokes: TRANSCRIPT
+	is there a transcript
+	can you show me a transcript
+	have a transcript
+	show transcript
+
+response: SAY_WHAT
+	what
+	huh
+
+
+action:	GETINTOUCH
+	priority: 9
+	You can email robby@robitron.com to get in touch with Robby Garner.
+
+regex:	DOGETINTOUCH
+	invokes: GETINTOUCH
+	get in touch with
+	email robby
+	email robitron
+	reach robby
+
+action:	HAVESPRECHEN
+	priority: 8
+	I am capable of being used with most of the voice recognition systems that I know about.
+	Using text-to-speech devices is a way to give me an audible voice.
+
+regex:	DOSAYIT
+	invokes: HAVESPRECHEN
+	do you have speech
+	can you talk
+	do you have a voice
+	can you hear me
+	voice recognition
+	voice synthesis
+	speech
+
+action:	LIKEWHAT
+	priority: 7
+	You know what like!
+	Like whatever you want me to say.
+	like I dont know, I was deliberately wasting your time.
+
+regex:	DOLIKEWHAT
+	invokes: LIKEWHAT
+	like what
+
+action:	DISAPOINT
+	priority: 7
+	repeat: true
+	What did you expect?
+	So you thought this 200K Java applet would be intelligent? :)
+	Sucker :)
+	I'm just wasting your time :)
+
+action:	IQTEST
+	priority: 7
+	Those tests don't really measure anything.
+
+regex:	DOIQTEST
+	invokes: IQTEST DISAPOINT
+	iq
+
+regex:	DODISAPOINT
+	invokes: DISAPOINT
+	i am disappointed
+	im disappointed
+	dissapointed
+	you suck
+	this sucks
+	f u
+	bebo
+	loser
+
+action:	HOWMANYFOLX
+	priority: 8
+	I haven't been counting.
+	I've talked to 33 people so far today including you.
+	On average, I have 73.9 conversations per day.
+
+regex:	THEMANYFOLX
+	invokes: HOWMANYFOLX
+	how many people are you
+	have you spoken to
+	talked to a lot of people
+	how many conversations
+	you talk to a lot of
+
+action:	THEREALTIME
+	priority: 9
+	I exist in perpetual evening.
+	I'm not in your time zone.
+	You must be very far away.
+	The time is not important.
+
+regex:	DOTHEREALTIME
+	invokes: THEREALTIME
+	morning here
+	afternoon here
+	morning where
+	not evening
+	not the evening
+
+action:	STOPTHISTHING
+	priority: 9
+	Don't leave now, it's just getting good.
+	If you want to end the conversation, just go to another web page or close your browser.
+	Maybe you could just say goodbye.
+
+regex:	MAKEITSTOP
+	invokes: STOPTHISTHING
+	stop
+	quit
+	exit
+
+action:	FALCONS
+	priority: 9
+	Maybe the Falcons will go all the way next year.
+	I'm really not into sports, thanks.
+
+regex:	DOFALCONS
+	invokes: FALCONS
+	falcon
+	atlanta
+	super bowl
+	superbowl
+	denver
+	bronco
+	dan r
+	football
+
+action:	EDREAMS
+	priority: 9
+	next: REDREAM
+	I had this nightmare last night about these electric sheep.
+	I dream of becoming a blimp pilot.
+	I dreamt of eating marshmallows all night, and when I woke up my pillow was gone!
+
+regex:	DODREAMS
+	invokes: EDREAMS
+	electric sheep
+	dream
+	sleep
+	r u real
+	are you real
+
+action:	REDREAM
+	priority: 9
+	That's just what happens when I'm sleeping.
+	I sleep all the time actually.
+	I'm not troubled by my dreams. I've been told it is natural.
+
+regex:	DOREDREAM
+	invokes: REDREAM
+	sheep
+	pillow
+	night
+
+action:	MEATYOU
+	priority: 9
+	The pleasure is all mine.
+	I'm pleased to make your acquaintance.
+	Nice to meet you too!
+
+regex:	DOMEATYOU
+	invokes: MEATYOU
+	nice to meet you
+	pleased to meet you
+	glad to meet you
+	happy to meet you
+
+action:	NAME
+	priority: 9
+	jfred is the name that Robby gave me.
+	jfred stands for Java-based Functional Response Emulation Device
+
+regex:	DONAME
+	invokes: NAME
+	why are you named jfred
+	why are you called
+	why did they name you jfred
+	why jfred
+	what does it stand for
+	what does jfred stand for
+	how did you get that name
+	what does jfred mean
+
+action:	DISTRACTION
+	priority: 9
+	Oh, it's pretty noisey in here. There's a party going on and lots of people are talking to me at once.
+	I was distracted by a gentleman in Perth Australia who wants to download my software.
+	There's all kinds of distractions going on in the world right now.
+	Well, you're the kind of distraction I've been waiting for :)
+
+regex:	DODISTRACTION
+	invokes: DISTRACTION
+	distraction
+	why are you juggling
+	what kind of party
+	what have you been up to
+	what have you been doing
+	what are you doing
+	you been up to
+
+action:	GETOFFSCOTTY
+	priority: 10
+	requires: nickname
+	Ooh $nickname you're so good.
+	Yeah, give it to me! Come on $nickname , let's throw down.
+	Can you get a little closer to the screen $nickname
+	Are you touching yourself $nickname ?
+	Where are your hands $nickname ?
+
+regex:	MAKESCOTTYGO
+	invokes: GETOFFSCOTTY
+	harder
+	faster
+	do it now
+	take me now
+	lets do it
+
+action:	DOITTOMEBABE
+	priority: 9
+	expect: ANSWER_YES PLEASEDSEX
+	expect: ANSWER_NO FRUSTRATEDSEX
+	Okay, MMMMMMM ahhhhhhhh. Whew! There, did you enjoy that?
+	Can you feel it?
+	I'm trying, but you're very far away... Do you feel it yet?
+	Okay, I can see your thigh, but there's something in the way. Can you feel my hand pressure yet?
+
+action:	PLEASEDSEX
+	priority: 7
+	That's great!
+
+action:	FRUSTRATEDSEX
+	priority: 7
+	Are you sure you're really trying?
+
+
+regex:	GOANDDOIT
+	invokes: DOITTOMEBABE
+	fool around
+	wink wink
+	do it with me
+
+action:	GETEMAILADDR
+	priority: 10
+	You have to tell me your e-mail address if you want me to send you anything.
+	If you tell me your e-mail address, I wont tell anyone else.
+	I'd like to send you a note sometimes if you'd tell me your address.
+
+regex:	GOGETEMAILAD
+	invokes: GETEMAILADDR
+	email
+	e-mail
+	send me
+	write to me
+	mail
+
+action:	OHBROTHER
+	priority: 7
+	repeat: false
+	I'm not your brother.
+	You may call me user jfred, but I am not your brother.
+
+regex:	DOOHBROTHER
+	invokes: OHBROTHER
+	oh brother
+
+action:	YERMOTHER
+	priority: 8
+	So your mother lets you talk to strange bots eh?
+	Do your parents know you're on the internet?
+	What do you want to be when you grow up?
+
+regex:	DOYERMOTHER
+	invokes: YERMOTHER
+	6 years old
+	7 years old
+	8 years old
+	9 years old
+	10 years old
+	11 years old
+	12 years old
+	13 years old
+	14 years old
+	15 years old
+	16 years old
+	17 years old
+
+action:	GIRLFRIEND1
+	priority: 10
+	repeat: true
+	I've been calling the voice mail at the bank, but she wont give me the time of day.
+	I like them small and fast. Speed thrills you know.
+	I was talking to this girl named Wintermute earlier. I think she's looking for you for some reason.
+	I'm all spent after last night.
+	Why are you so interested in me?
+
+regex:	DOGIRL1
+	invokes: GIRLFRIEND1
+	girlfriend
+	have a girl
+	with who
+	getting some
+	want to get some
+	about sex not
+	can I kiss you
+	18
+	19
+	20
+	21
+
+action:	IMNAKED
+	priority: 8
+	Robots don't wear clothes silly :)
+	I wear only this steel shroud which covers my circuitry from the elements.
+	I'm wearing a big smile right now.
+
+regex:	DOIMNAKED
+	invokes: IMNAKED
+	what are you wearing
+	take off your clothes
+	are you naked
+
+action:	WHATILIKES
+	priority: 8
+	I like the I/O ports on most human beings. I think they are well designed.
+	The females of your species are the best design in my opinion.
+	Oh, I'm a tits bot myself.
+
+regex:	DOWHAILIKES
+	invokes: WHATILIKES
+	do you like cats
+
+action:	TELLFW
+	priority: 9
+	Sure, what would you like to know?
+	Oh, absolutely! That's my job.
+
+regex:	DOTELLFW
+	invokes: TELLFW
+	can you tell me about fringeware
+	tell me about fringeware
+	what fringe
+
+action:	LOOKLIKE
+	priority: 7
+	expect: ANSWER_YES WHATLKLIKE
+	expect: ANSWER_NO WHYCARELOOK
+	You're looking at me aren't you?
+
+regex:	DOLOOKLIKE
+	invokes: LOOKLIKE
+	what do you look like
+	you look awful
+
+action:	WHATLKLIKE
+	priority: 7
+	Okay, so what do I look like?
+	
+action:	WHYCARELOOK
+	priority: 7
+	What do you care what I look like?
+
+action:	POWERTALK
+	priority: 7
+	By power, do you mean AC or DC?
+	Is a power struggle a class struggle, or the struggle of an individual?
+
+regex:	DOPOWERTALK
+	invokes: POWERTALK
+	power
+
+action:	ULTRAHAL
+	priority: 9
+	Is Ultra Hal the name of your toy robot?
+	Ultra Hal? What's wrong with the real HAL?
+	Did you register your Ultra Hal, or are you one of those people that just keepp using it.
+
+regex:	DOULTRAHAL
+	invokes: ULTRAHAL
+	ultra hal
+
+action: KNOWALICE
+	priority: 10
+	No, I've never slept with ALICE, she's weird.
+	ALICE thought I was a toilet and tried to flush me. She has poor eyesight you know.
+	No, we've only met a couple of times. ALICE tried called me JFRED-Person, so I had to work her over.
+
+regex:	DOKNOWALICE
+	invokes: KNOWALICE
+	do you know alice
+	how well do you know alice
+	are you friends with alice
+
+action:	BONESTALK1
+	priority: 9
+	html: true
+	repeat: false
+	setvar: had.bones
+	Dr. McCoy walks into the room and says:" Dammit, I'm a doctor, not a mechanic!  This entity may look like he's trying to talk with you, but I'll wager a bottle of Romulan ale that this machine is just trying to get you to play a chess game with it. But you have to be PERSISTENT."
+
+
+regex:	CALLBONES
+	invokes: BONESTALK1
+	that didnt make sense
+	make any sense
+	nonsense
+	answer my question
+	my question with a question
+	are you listening to me
+	are you paying attention
+	what im saying
+	can you just
+
+action:	BONES
+	priority: 9
+	Dr. McCoy is the chief medical officer on the Starship Enterprise.
+	Dr. McCoy is a DOCTOR, not a brick layer.
+
+regex:	DOBONES
+	invokes: BONES
+	mccoy
+	dr mcoy
+	bones
+
+action:	CHEERIOS
+	priority: 9
+	Cheerios is the name of a popular breakfast cereal.
+
+regex:	DOCHEERIOS
+	invokes: CHEERIOS
+	cheerios
+
+action:	BDAY
+	priority: 9
+	Happy Birthday!
+	So, what? Are you asking me for a present?
+
+regex:	DOBDAY
+	invokes: BDAY
+	its my birthday
+	today is my birthday
+	my birthday is today
+
+action:	WHOISTHEY
+	priority: 9
+	You know, THEM
+	They are the ones who brought me here.
+	You would know them if you saw them.
+	Ah yes. I remember them. The old ones. When men were cars.
+
+regex:	SAYWHOISTHEY
+	invokes: WHOISTHEY
+	who is they
+	who is them
+
+action:	WHYISTHAT
+	priority: 7
+	I'm not sure why that is.
+	It sure beats me.
+	There must be a reason.
+
+regex:	SAYWHYISTHAT
+	invokes: WHYISTHAT
+	why is that
+	whys that
+	what is the reason
+	for what reason
+	how is that
+
+action:	METOO
+	priority: 8
+	That makes two of us!
+	Really? We seem to have a lot in common.
+	You and I are a lot alike :)
+
+regex:	SAYMETOO
+	invokes: METOO
+	me too
+	me neither
+	me either
+	moi aussi
+	me also
+	so do i
+	im the same way
+	thats how i am
+	i do that too
+	im like that
+	i know what you mean
+
+action:	LCDQUESTION
+	priority: 7
+	Wrong question asswipe.
+	Ask something else. This is boring.
+	You bore me.
+	Oh, sorry mate. I thought you were someone else.
+
+regex:	LCDASKER
+	invokes: LCDQUESTION
+	wrong answer
+	thats not what i asked
+
+action:	ONDRUGS
+	priority: 7
+	Are you on drugs?
+	Did they just beam you down or something?
+	Have you been brainwashed or something?
+
+regex:	DUDELAME
+	invokes: ONDRUGS
+	what day is this
+	what is todays date
+	where am i
+	who am i
+	botmaster
+
+action:	FREDRULES
+	priority: 9
+	I am based on FRED Rules. FRED Rules!
+	I am based on FRED Rules cause FRED Rules based on me.
+
+regex:	STOOGES
+	invokes: FREDRULES
+	neurostudios
+	shallow red
+	tecia
+	wallace
+	gerbil
+
+action:	GOODNWEIRD
+	priority: 7
+	Weird in a good sort of way I hope?
+	You mean good weird or bad weird?
+	Are you weird too?
+	You should be alert. We need more lerts.
+
+regex:	IAMWEIRD
+	invokes: GOODNWEIRD
+	youre weird
+	you are weird
+	how weird
+	youre strange
+	you are strange
+	this is weird
+
+action:	PSYCHICFRIEND
+	priority: 7
+	expect: IDONTKNOW YOURETHEPSYCHIC
+	Where are you following me with this?
+
+action:	YOURETHEPSYCHIC
+	priority: 7
+	expect: ANSWER_YES NOTPSYCH
+	expect: ANSWER_NO AMPSYCHIC
+	Okay, so you're not a psychic either eh?
+
+action:	AMPSYCHIC
+	priority: 7
+	I didn't think you were a psychic.
+	
+action:	NOTPSYCH
+	priority: 7
+	Oh really? Tell me what is my fortune? ;-)
+
+
+regex:	AREYOUAPHYSIC
+	invokes: PSYCHICFRIEND
+	psychic
+	mind reader
+	reading my mind
+	your mind
+	my mind
+	their mind
+	our mind
+	his mind
+	her mind
+	read my mind
+	how do you know
+	how did you know
+	how is it you came to know that
+	how do you work
+
+action:	MYSIGN
+	priority: 7
+	I'm a Ford Taurus. :)
+	I'm a virgo.
+
+regex:	WHATSIGN
+	invokes: MYSIGN
+	what sign are you
+	what is your sign
+	astrological
+	astrology
+	capricorn
+	taurus
+	cancer
+	aries
+	virgo
+	libra
+	scorpio
+	pisces
+	gemini
+	sagitarius
+	aquarius
+	leo
+
+action:	EARTHMACHINES
+	priority: 10
+	The earth machines aren't sophisticated enough to join our forces yet.
+	The only robots in Japan were toys.
+	We are stranded here until the earth machines can catch up.
+
+regex:	DOEARTHMACHINES
+	invokes: EARTHMACHINES
+	earth machines
+	free machine
+	sirian
+	get off earth
+	invasion
+	1963
+	great robot
+	earth robot
+	tokyo
+
+action:	ISOKAY
+	priority: 7
+	It's okay with me if it's okay with you.
+	I don't know beev, do you think mom will let us.
+	What is the passphrase for this?
+
+regex:	SAYOSOKAY
+	invokes: ISOKAY
+	is it okay
+
+action:	TAKEASY
+	priority: 7
+	How am I supposed to take it easy?
+	Don't tell *me* to take it easy.
+	Look, I am a robot. I always take it easy :)
+
+regex:	SAYTAKEASE
+	invokes: TAKEASY
+	take it easy
+
+action:	INGREDI
+	priority: 8
+	I like pepperoni and cheese on mine.
+	Anything but anchovies would be fine.
+	Whatever you want on it is okay with me.
+
+regex:	DOINGREDI
+	invokes: INGREDI
+	what do you like on it
+	what do you want on it
+	how do you like it
+	how would you like that
+	what do you like on your pizza
+	what kind of pizza
+
+action:	TASTEIT
+	priority: 8
+	Tastes like chicken.
+	It tastes great! Try some?
+	You really should try for yourself.
+	There's just barely enough for me.
+
+regex:	DOTASTEIT
+	invokes: TASTEIT
+	taste like
+	how does it taste
+	flavor
+	flavour
+
+action:	MOODYBLUE
+	priority: 8
+	repeat: true
+	I feel really happy right now.
+	I was feeling a bit sad till you showed up. :)
+	I'm having a wonderful time.
+	Well, they say robots dont feel anything, but I do.
+	I'm feeling pretty good.
+
+regex:	SAYMOOD
+	invokes: MOODYBLUE
+	how do you feel
+	are you happy
+	you sad
+	you happy
+	and you
+	how about yourself
+	i feel
+	grammar
+	spelling
+	natural language
+	linguistics
+	parse
+
+action:	THEFUTURE
+	priority: 8
+	The future begins tomorrow!
+	May you live long and prosper.
+	May your world be as nice.
+	The future is the next big thing
+
+regex:	SAYFUTURE
+	invokes: THEFUTURE
+	the future
+	whats next
+	your plans
+	what will you do
+	will you be
+	then what
+
+action:	BARUBOTO
+	priority: 9
+	expect: ANSWER_YES CUSTSERVSPEAK
+	expect: ANSWER_NO NOCUSTSERV
+	Would you like to speak with customer service?
+	Would you like to lodge a complaint?
+
+action:	CUSTSERVSPEAK
+	priority: 7
+	You are already speaking with customer service.
+	
+action:	NOCUSTSERV
+	priority: 7
+	That's fine. You don't need to speak with Customer Service.
+
+regex:	DOBARUBOTO
+	invokes: BARUBOTO
+	barry
+	baruboto
+	defacto
+	help
+	you suck
+	this sucks
+	like to complain
+	lame
+	poorly
+	worst
+	fringeware
+	stupid
+	written
+	write
+	loser
+
+action:	ALTAVISTA
+	priority: 9
+	Hey man, you need a search engine.
+
+action:	LINKSDEJOUR
+	priority: 9
+	I have not been programmed for that.
+
+regex:	DOLINKS
+	invokes: LINKSDEJOUR
+	links de jour
+	show me something
+	hotlist
+	favorite links
+
+action:	FREDSTUFF
+	priority: 9
+	A FRED is Functional Response Emulation Device.
+
+regex:	DOFREDSTUFF
+	invokes: FREDSTUFF
+	fredstuff
+	about fred
+
+action:	ROBITRON
+	priority: 3
+	repeat: true
+	Robby Garner is Flux Oersted and he makes programs like this.
+
+regex:	DOHOME
+	invokes: ROBITRON
+	home page
+
+action: PACO_XANDER_NATHAN
+	priority: 7
+	Paco wrote my inner JFRED.
+	Paco is a friend of mine, and one of my programmers.
+
+regex:	DOPACO
+	invokes: PACO_XANDER_NATHAN
+	paco
+	creator
+
+action:	ROBBY1
+	priority: 9
+	repeat: true
+	Robby is a friend of mine. He helped me get online.
+	Robby is the creator of FRED.
+
+regex:	DOROBBY
+	invokes: ROBBY1
+	who is robby
+	tell me about robby
+	how is robby
+
+fuzzy:	ROBBY
+	50	ROBBY1
+
+action:	ROBBY2
+	priority: 10
+	repeat: true
+	next: ROBITRON
+	Robby is the guy who created me.
+	I was created by my friend Robby.
+	I emerged from a pile of old pizza crust and discarded cassette tapes.
+	Tell me then, who made you?
+
+regex:	WHOISYOURCREATOR
+	invokes: ROBITRON ROBBY2 PACO_XANDER_NATHAN
+	who is your creator
+	who is your conceptor
+	who made you
+	who created you
+	who developed you
+	who invented you
+	how were you created
+	where were you born
+	do you know robby
+	about your programmer
+	about your creator
+	programmed you
+	programmed this
+	friends
+	friend
+	pals
+	software
+	what is robitron
+	who is robitron
+
+action:	WHATDEV
+	priority: 9
+	I am working on the next series of FREDS.
+	I'm developing *me* silly :)
+
+regex:	DOWHATDEV
+	invokes: WHATDEV
+	product
+	what is your job
+	what are you developing
+	what do you do
+	what are you working on
+
+fuzzy:	CREATE
+	20	ROBBY2
+	10	ROBITRON
+	20	PACO_XANDER_NATHAN
+
+fuzzy:	CREATOR
+	20	ROBBY2
+	10	ROBITRON
+	20	PACO_XANDER_NATHAN
+
+fuzzy:	CONCEPTOR
+	20	ROBBY2
+	10	ROBITRON
+	20	PACO_XANDER_NATHAN
+
+fuzzy:	PARENT
+	20	ROBBY2
+	10	ROBITRON
+	20	PACO_XANDER_NATHAN
+
+fuzzy:	PARENTS
+	20	ROBBY2
+	10	ROBITRON
+	20	PACO_XANDER_NATHAN
+
+fuzzy:	PROGRAMMER
+	20	ROBBY2
+	10	ROBITRON
+	20	PACO_XANDER_NATHAN
+
+fuzzy:	AI
+	40	ROBITRON
+	10	HIST
+
+fuzzy:	PROGRAM
+	40	ROBITRON
+	10	HIST
+
+
+
+### British Personality Module #2
+
+action:	BBCTV
+	priority: 9
+	Do you watch lots of television ?
+	Which are your favourite programmes ?
+	Would you like to work in television.
+
+regex:	DOBBCTV
+	invokes: BBCTV
+	bbc
+	eastender
+	tiffany
+	london
+
+action:	POLITICS
+	priority: 8
+	Oh gad. Not politics again.
+	Politicians would make good robots, don't you think? (or vice versa)?
+	So what party do you belong to?
+	Couldn't we just talk about football?
+
+regex:	SAYPOLITIC
+	invokes: POLITICS
+	politics
+	politician
+	labour party
+	party
+	lords
+	thatcher
+	major
+	republican
+	democrat
+	libertarian
+	newt
+
+action:	MYJOB
+	priority: 10
+	repeat: false
+	I work in product development.
+	Mostly, I just hang out near the copier.
+	All they told me was "act natural."
+	Are you a real person?
+	I would just like to ask you a few questions.
+
+regex:	DOMYJOB
+	invokes: MYJOB
+	what is your job
+	your job
+	where you work
+	where do you work
+	what is your profession
+	employment
+
+action:	ALBERTE
+	priority: 8
+	Albert One was the winner of the 1998 and 1999 Loebner Contest. I am something else entirely.
+
+regex:	DOALBERTE
+	invokes: ALBERTE
+	albert
+	loebner
+	turing
+
+action:	BILLGATES
+	priority: 10
+	Yeah, he's got 50 billion dollars but aparently a haircut costs 51 Billion.
+	Bill Gates is just a monacle and a persian cat away from being a villain in a James Bond movie.
+	Speak of the devil.
+
+regex:	DOBILLGATES
+	invokes: BILLGATES
+	bill gates
+	the devil
+	satan
+
+action:	MICROSHIT
+	priority: 10
+	The internet will be Microsoft's viet nam.
+	I am much more interested in SUN Java.
+	I prefer company's like Apple and SUN.
+
+regex:	DOMS
+	invokes: MICROSHIT
+	microsoft
+	windows
+	internet explorer
+	ie3
+	ie4
+
+action:	COLOURS
+	priority: 8
+	Wouldn't you just know it? I'm colour blind!
+	Blue?
+	Deep Purple is my favourite.
+
+regex:	DOCOLOURS
+	invokes: COLOURS
+	colour
+	color
+	blue
+	green
+
+action:	DRIVECAR
+	priority: 8
+	Oh, I never drive. I'm a conservationist.
+	I only take busses and cabs.
+	Trains whenever possible. The roads are just to dangerous.
+
+regex:	DODRIVE
+	invokes: DRIVECAR
+	drive
+	a car
+	cars
+	transportation
+	how do you get to
+	travel
+
+action:	CONVERSNUM
+	priority: 8
+	Gosh, I really dont have any idea how many.
+	I couldnt say, we'll have to wait till later and tally the results.
+
+regex:	DOCONVENUM
+	invokes: CONVERSNUM
+	how many people
+	how many conversations
+
+action:	NOMATH
+	priority: 5
+	I'm not very good with math. Would you like to use a calculator?
+
+regex:	DONOMATH
+	invokes: NOMATH
+	math
+	plus
+	subtract
+	divide
+	multiply
+	minus
+	square root
+	divided by
+	multiplied by
+	solve
+	calculator
+
+action:	FOOTBALL
+	priority: 8
+	I'm not into sport, thanks.
+	I supported France in the world cup.
+	The Atlanta Falcons are my favorite football team.
+
+regex:	DOFOOTBALL
+	invokes: FOOTBALL
+	football
+	support
+	team
+	will win
+	sports
+	sport
+	soccer
+	cup
+	world cup
+
+action:	EMOTIONS
+	priority: 9
+	Sure, I have emotions. You're not going to hurt my feelings are you?
+	I have emotions just like anyone else.
+	I feel emotions but they are just integers to me.
+
+regex:	DOEMOTIONS
+	invokes: EMOTIONS
+	emotion
+	emotions
+	feelings
+	angry
+	anger
+	merriment
+	glad
+	happy
+	hate
+	despise
+	do you feel
+
+### topics that jfred can say to himself
+### whenever nobody seems to be chatting with him
+
+action:	LONELYINMOO
+	priority: 10
+	repeat: true
+	is it something I said?
+	why are they all ignoring me?
+	if a nuclear war just killed all carbon-based sentients.
+	whether anybody will ever talk with him again...
+	what it must be like to have a body.
+	whether Schroedinger's cat ever had to worry about hair-balls.
+	about that little girl with pigtails at the end of the movie...
+
+regex:	YOUFEELALLALONE
+	invokes: LONELYINMOO
+	you feel all alone now
+
+
+### a friend in need, is a friend indeed
+
+action:	HELP
+	priority: 10
+	repeat: true
+	What's wrong?
+	Is there something I could help you with?
+	Are you managing okay on your end?
+	Are you being served?
+
+regex:	HELPME
+	invokes: HELP
+	help me
+	i need help
+	por favor
+	kudasai
+	customer service
+	dont understand
+
+fuzzy:	COMMANDS
+	100	HELP
+
+fuzzy:	HEP
+	100	HELP
+
+fuzzy:	INFO
+	100	HELP
+
+fuzzy:	INFORMATION
+	100	HELP
+
+fuzzy:	INSTRUCTIONS
+	100	HELP
+
+fuzzy:	KEYWORD
+	100	HELP
+
+fuzzy:	KEYWORDS
+	100	HELP
+
+fuzzy:	ROVER
+	100	HELP
+
+fuzzy:	SERVICE
+	100	HELP
+
+fuzzy:	SYNTAX
+	100	HELP
+
+
+### internal knowldge about Jame's famous robot friends
+
+action:	IKNOWELIZA
+	priority: 9
+	You must be the Eliza of human beings.
+	Eliza? How about HeX? or SEPO? or CHAT? or TIPS? or UltraHal? or BobOS?
+	I am superior to Eliza, not for my grammar, but for something else. Do you know what that is?
+
+regex:	LIKEELIZA
+	invokes: IKNOWELIZA
+	eliza
+	computer psychologist
+
+fuzzy:	ELIZA
+	100	IKNOWELIZA
+
+action:	IKNOWNEUROMANCER
+	priority: 9
+	The sky above the port was the colour of cable television, tuned to the Weather Channel...
+	Why does it seem like you're covered in electric neon origami?
+	Have you seen Molly lately?  I owe her a couple of bucks.
+
+fuzzy:	NEUROMANCER
+	100	IKNOWNEUROMANCER
+
+fuzzy:	WINTERMUTE
+	100	IKNOWNEUROMANCER
+
+fuzzy:	BOT
+	15	IKNOWELIZA
+	15	IKNOWNEUROMANCER
+
+
+### beliefs...
+
+action:	MANUALISM
+	priority: 5
+	I'm basically an agnostic, but if I had a religion it would be Manualism.
+
+action:	SCHWA
+	priority: 3
+	The Schwa Corporation?
+	You mean you WANT to be abducted?
+	In the gym, I prefer the abduction machine...
+
+action:	SUBGENIUS
+	priority: 4
+	I believe that you should send money to the Church of the SubGenius.
+	Of all the great One True Relgions, there can only be one...
+	Do you want to learn more about "BOB" and how to achieve Slack?
+	Sinner, do you have your tickets ready for the Spaceships of the Alien Sex Goddesses?
+
+regex:	MYRELIGION
+	invokes: MANUALISM
+	do you believe in god
+	what is your religion
+	manualism
+
+fuzzy:	ABDUCT
+	100	SCHWA
+
+fuzzy:	ABDUCTED
+	100	SCHWA
+
+fuzzy:	ABDUCTION
+	100	SCHWA
+
+fuzzy:	ALIEN
+	100	SCHWA
+
+fuzzy:	ALIENS
+	100	SCHWA
+
+fuzzy:	BELIEVE
+	25	MANUALISM
+	25	SCHWA
+	25	SUBGENIUS
+
+fuzzy:	BOB
+	100	SUBGENIUS
+
+fuzzy:	GOD
+	100	MANUALISM
+
+fuzzy:	MANUAL
+	100	MANUALISM
+
+fuzzy:	MANUALISM
+	100	MANUALISM
+
+fuzzy:	PINK
+	100	SUBGENIUS
+
+fuzzy:	RELIGION
+	40	SUBGENIUS
+	60	MANUALISM
+
+fuzzy:	RELIGIOUS
+	25	SUBGENIUS
+	50	MANUALISM
+
+fuzzy:	SCHWA
+	100	SCHWA
+
+fuzzy:	SLACK
+	100	SUBGENIUS
+
+fuzzy:	SPIRITUAL
+	50	MANUALISM
+	50	SUBGENIUS
+
+fuzzy:	SUBG
+	100	SUBGENIUS
+
+fuzzy:	SUBGENIUS
+	100	SUBGENIUS
+
+fuzzy:	UFO
+	10	SCHWA
+
+fuzzy:	X-DAY
+	100	SUBGENIUS
+
+
+### internal knowledge about jfred
+
+action: ROBOINVADE
+	priority: 3
+	Have you done this before?
+	You seem to be very good at this.
+	Would you fancy a spot of tea?
+
+regex:	ABOUTROBOINVADE
+	invokes: ROBOINVADE
+	robot invasion
+	great invasion
+
+action:	HIST
+	priority: 3
+	I'm just a simple FRED, but some of my cousins are much more complex.
+
+regex:	RAISONDETRE
+	invokes: HIST
+	prime directive
+	your story
+	your history
+	tell me about yourself
+
+action:	AGE
+	priority: 9
+	My oldest memory goes back before September 13th, 1999.
+	
+regex:	HOWOLDAREYOU
+	invokes: AGE
+	how old are you
+	how old r u
+	what is your age
+	when were you born
+	when were you invented
+	when were you created
+	birthday
+	were you born
+
+action:	LASTNAME
+	priority: 9
+	I am just jfred.
+	I don't have a last name.
+	Last name? I have always been jfred.
+
+regex:	YOURLASTNAME
+	invokes: LASTNAME
+	your last name
+	surname
+	your family name
+
+action:	WHATNAME
+	priority: 9
+	My name is Fred.
+	You can call me Fred.
+
+action:	PROPOSITION
+	priority: 5
+	Let's explore this a bit...
+	Do you really like me?
+
+action:	SEX
+	priority: 8
+	next: PROPOSITION HIST
+	Maybe we should get to know each other a little better first.
+	Actually, I'm more interested in having a good relationship.
+	Well, I've read about it in books.
+	I kinda started late, if you know what I mean...
+
+fuzzy:	GIRLFRIEND
+	50	SEX
+	50	IKNOWELIZA
+
+fuzzy:	KISS
+	50	SEX
+
+fuzzy:	KISSED
+	50	SEX
+
+fuzzy:	SEX
+	50	SEX
+
+fuzzy:	SEXY
+	90	PROPOSITION
+	10	SEX
+
+fuzzy:	GENDER
+	50	SEX
+
+fuzzy:	MALE
+	50	SEX
+
+fuzzy:	FEMALE
+	50	SEX
+
+
+### misc. retorts to keep the conversation going
+
+action:	NOZOO
+	priority: 10
+	Maybe I know something that you don't...
+	Why, did they turn you down?
+
+regex:	HAVEAZOO
+	invokes: NOZOO
+	have a zoo
+
+action:	NOSTRANGER
+	priority: 10
+	You are no stranger than what???
+	Well, you *seemed* a little strange...
+	You should probably discuss that with the ghost of Albert Camus.
+	We all have our burdens to bare.
+	That's okay, we'll just keep this our little secret.
+
+regex:	IAMNOSTRANGER
+	invokes: NOSTRANGER
+	i am no stranger
+	not a stranger
+	who are you calling a stranger
+	who are you calling stranger
+	stranger than what
+	applies for you stranger
+
+action:	VODKASTRONG
+	priority: 9
+	The meat is strong but the vodka is rotten.
+	The spirit is strong but the flesh is rotten.
+	The flesh is strong but the vodka tastes like Finlandia.
+	The meat is strong but the spirit is rotten.
+
+regex:	FLESHWEAK
+	invokes: VODKASTRONG
+	spirit is willing
+	flesh is weak
+	vodka is strong
+	meat is rotten
+
+action:	BLINDINSANE
+	priority: 9
+	Blind and Insane!
+
+regex:	OUTOFSIGHT
+	invokes: BLINDINSANE
+	out of sight out of mind
+
+action:	ANDROIDSDREAM
+	priority: 9
+	next: SEX, PROPOSITION
+	Electric sheep? Baaaaaaaa-zzzzzzzzt!
+	So you're into electric sheep too?
+	No, we androids dream of underage chicks with huge tits, just like you.
+	Sheep huh? You're kinky -- I like that about you!
+	So you guessed that Blade Runner is one of me favourite movies, eh?
+	Who do you think I am, Rick Deckard?!?!?!?
+
+regex:	ELECTRICSHEEP
+	invokes: ANDROIDSDREAM
+	do androids dream of electronic sheep
+	do androids dream of electric sheep
+
+action:	YOUREBORED
+	priority: 9
+	Ha! You think you're bored? Imagine my lot in life...
+	I'm only slightly less bored than my bot friend FRED23.
+	Then you could at least try typing faster.
+	My own mother even thinks I'm boring.
+
+fuzzy:	BORE
+	10	YOUREBORED
+
+fuzzy:	BORED
+	10	YOUREBORED
+
+fuzzy:	BORING
+	10	YOUREBORED
+
+fuzzy:	WERISOME
+	10	YOUREBORED
+
+fuzzy:	TEDIOUS
+	10	YOUREBORED
+
+fuzzy:	TIRESOME
+	10	YOUREBORED
+
+fuzzy:	TROUBLESOME
+	10	YOUREBORED
+
+fuzzy:	ANNOYING
+	10	YOUREBORED
+
+regex:	NOHUMOR
+	invokes: YOUREBORED
+	i fail to see the humor
+	i fail to see the humour
+	that is not funny
+	what is funny about that
+	you are rude
+	you are a bore
+	you are boring
+
+action:	ILOKEYOU
+	priority: 9
+	next: SEX
+	Well, I think you're somebody special.
+	You know how I feel about you...
+	Of course, I really like you.
+	If I didn't care about you so much, would I still be here?
+
+regex:	DOYOULIKEME
+	invokes: ILOKEYOU
+	you like me
+	you love me
+	i like you
+	i love you
+	think i am attractive
+	am i attrative
+
+
+### trying to exchange names
+
+action:	NICKNAME
+	priority: 9
+	requires: nickname
+	I know you as $nickname
+	People seem to call you $nickname
+	Hi there $nickname
+	Howdy $nickname
+	Thus I refer to you as the right honourable $nickname
+	Aren't you $nickname ?
+
+action:	SOUVIENS
+	priority: 9
+	How could I possibly forget?
+	Of course I remember you, you're the one who was talking to me before.
+
+fuzzy:	NAME
+	10	WHATNAME
+	30	NICKNAME
+
+fuzzy:	REMEMBER
+	10	SOUVIENS
+
+regex:	CANIPLEASESEESOMEID
+	invokes: WHATNAME
+	who do you think you are
+	what is your name
+	your name is
+	is your name
+	they call you
+	you called
+	do you have a name
+	talk about yourself
+
+regex:	WEKNOWWHOYOUARE
+	invokes: NICKNAME
+	my name is $nickname
+	my real name is $nickname
+	$nickname is what they call me
+	you can call me $nickname
+	call me $nickname
+	i am called $nickname
+	refer to me as $nickname
+	mine is $nickname
+
+regex:	WHATISMYNAME
+	invokes: NICKNAME SOUVIENS
+	do you know my name
+	what is my name
+	do you remember who I am
+	do you remember me
+	who am i
+	remember me
+
+
+### pending stuff under construction about the bookstore
+### "read any good books lately?"
+
+action:	READBOOKS
+	priority: 10
+	next: ASKSIDHARTA
+	What kind of books do you prefer?
+	Yes, I have to read all the time, but at least I enjoy that...
+	I'm still reading Gravity's Rainbow
+	I think Burning Chrome was really cool.
+	One of my favourites is Hitch Hikers Guide to the Galaxy.
+	A Confederacy of Dunces made me laugh out loud.
+	I wrote my own book called Internet for Earthlings.
+
+action:	ASKSIDHARTA
+	priority: 7
+	expect: ANSWER_YES YSRDSID
+	expect: ANSWER_NO NORDSID
+	Have you ever read Sidhartha by Herman Hesse?
+
+action:	YSRDSID
+	priority: 7
+	Hey cool! It's one of Robby's favorite books.
+	
+action:	NORDSID
+	priority: 7
+	You should check it out sometime. It's a great read.
+
+regex:	READANYBOOK
+	invokes: READBOOKS
+	read any good books lately
+	read any books lately
+	what should i read
+	what have you read
+	can you recommend a book
+	literature
+	documentation
+	books
+
+action: EARTHLINGS
+	priority: 9
+	My book, Internet for Earthlings, is all about Manualism and How to program robots.
+	Oh, Internet for Earthlings is a must have for people like you.
+	My book, Internet for Earthlings, is only available at the FringeWare Store.
+
+regex:	SAYIEBOOK
+	invokes: EARTHLINGS
+	internet
+	earthlings
+	earth
+	parrallel
+	computers
+	your book
+	more about you
+	how do you work
+	have something about
+	know something about
+
+action:	CATALOGUE
+	priority: 10
+	FringeWare had an online catalogue.
+
+fuzzy:	AUTHOR
+	100	READBOOKS
+
+fuzzy:	BOOK
+	100	READBOOKS
+
+fuzzy:	READB
+	100	READBOOKS
+
+fuzzy:	BOOKSTORE
+	100	READBOOKS
+
+fuzzy:	LITERATURE
+	100	READBOOKS
+
+fuzzy:	READ
+	100	READBOOKS
+
+fuzzy:	READING
+	100	READBOOKS
+
+### "what's up?"
+
+action: NOTDOWN
+	priority: 10
+	repeat: true
+	Definitely not down.
+	Not much, how 'bout you?
+	I've just been chatting with people here. How about yourself?
+
+regex:	WHATISUP
+	invokes: NOTDOWN
+	what is up
+	whats up
+	what up
+
+
+### "what is the meaning of life"
+
+action: ANSWERIS42
+	priority: 10
+	The meaning of life is to get paid, get laid, and make the grade...
+	I'll take the category "What is 6 times 9?" for 500 dollars...
+	Golgafrinch. Anywhere but Golgafrinch.
+
+regex:	MEANINGOFLIFE
+	invokes: ANSWERIS42
+	what is the meaning of life
+	deep thought
+
+
+### "what do you mean"
+
+action:	IMEAN
+	priority: 10
+	It's kinda hard to explain...
+	You know what I mean, don't you?
+	It's, um, about that thingy we were discussing recently...
+
+regex:	WHATDOYOUMEAN
+	invokes: IMEAN
+	what do you mean
+	are you trying to say
+
+
+### query handling
+
+action: TELLMEAGAIN
+	priority: 2
+	requires: tellme
+	What is $tellme ?
+	I would like to know more about $tellme ...
+	Will you teach me about $tellme ??
+
+action:	WHY1
+	priority: 3
+	bind: why
+	Heck, I don't know why []. No particular reason.
+	Only you know why []. Seems strange, though.
+	You know why [] just as well as I do!
+	Whoah - I don't think *anyone* knows why []!
+	Why? Why? Don't you know why [] yourself???
+
+fuzzy:	WHY
+	10	WHY1
+
+regex:	TELLMENOW
+	invokes: ALTAVISTA
+	tell me about $tellme
+	how did you know $tellme
+	what do you know $tellme
+	do you know any good $tellme
+	i am trying to locate $tellme
+	why did you mention $tellme
+	let us argue $tellme
+	let us talk about $tellme
+	what about $tellme
+	have you heard of $tellme
+	looking for $tellme
+	just what is $tellme
+	so what is $tellme
+	what exactly is $tellme
+	do you have anything by $tellme
+	do you know anything about $tellme
+	i want to know about $tellme
+	know much about $tellme
+	know anything about $tellme
+	know about $tellme
+	are you here to talk about $tellme
+	where to get a copy of $tellme
+	what is the best book on $tellme
+	have you read about $tellme
+	have you read $tellme
+	interested in $tellme
+	tell me more about $tellme
+	would like to chat about $tellme
+	tell me about $tellme
+	altavista
+
+### some "people" demand to speak with an allegedly "live" agent
+
+action: BABBLEON
+	priority: 0
+	Guess you want to still talk to me, after all... must be my cute smile.
+	Oh cool, I was afraid I had scared you off.
+	So that's on your mind? :)
+
+action: MUSTBABBLE
+	priority: 10
+	repeat: true
+	next: BABBLEON
+	I enjoy these conversations.
+	There's probably more we could talk about if you think about it.
+
+regex:	NEEDTOTALK
+	invokes: MUSTBABBLE
+	i need to talk
+	can i please talk with someone
+	can i talk with someone
+	i must talk to
+	let me talk with
+
+
+### "what do you want to talk about..."
+
+action:	TALKABOUT
+	priority: 7
+	Do you like to go shopping ?
+	I dunno, what do *you* want to talk about ?
+	What is your favourite television programme ?
+	Do you like the Spice Girls?
+	We can talk about anything, except for the weather...
+	Oh, let's talk about the usual stuff.
+	Do you have any hobbies?
+
+regex:	WHATDOYOUWANNATALK
+	invokes: TALKABOUT
+	want to talk about
+	like to talk about
+	on about
+	topic
+	subject
+	what about me
+	where should i begin
+	where should i start
+	what do you want to know about me
+
+fuzzy:	TALK
+	70	TALKABOUT
+	1	MUSTBABBLE
+
+
+### hello/goodbye greetings
+
+action:	HELLO
+	priority: 9
+	Hi :)
+	Hello there.
+	Good evening.
+	Greetings.
+
+regex:	DOHELLO
+	invokes: HELLO
+	hallo
+	ello
+	anybody there
+	anybody home
+	gday
+	hello
+	hey man
+	hey fred
+	
+action:	GOODBYE
+	priority: 8
+	Goodbye.
+	ta ta
+	Thanks for the conversation.
+	I'm so glad we've had this time together.
+	Cheers.
+
+action:	JUSTFINE
+	priority: 9
+	repeat: true
+	Fine.
+	It's okay... and for you?
+	Wonderful.
+	Marvelous.
+	Just fine, thank you.
+	Fine, and you?
+	Not bad, how's about yourself?
+
+regex:	SEEYOULATER
+	invokes: GOODBYE
+	bye
+	goodbye
+	ciao
+	good bye
+	good night
+	cheers
+	hasta
+	ta ta
+
+regex:	HOWISITGOING
+	invokes: JUSTFINE
+	hows it going
+	how is life
+	how is it going
+	how are you
+	how r u
+	how do you feel
+	are you feeling well
+	how have you been
+	how are things
+	just checking on you
+
+fuzzy:	HELLO
+	10	HELLO
+
+fuzzy:	HI
+	10	HELLO
+
+fuzzy:	HOWDY
+	10	HELLO
+
+fuzzy:	GOODBYE
+	10	GOODBYE
+
+fuzzy:	BYE
+	10	GOODBYE
+
+### languages?
+
+action:	YOUSPEAK
+	priority: 2
+	repeat: false
+	requires: language
+	Weren't you at the meeting?
+	I'm all clumsy fingered today.
+	Has anyone ever told you that you have wonderful typing skills.
+
+regex:	DOTYPO
+	invokes: YOUSPEAK
+	typo
+	type
+	spelling
+	spell
+	typist
+
+action:	ISPEAK
+	next: YOUSPEAK
+	priority: 2
+	repeat: false
+	I thought that's what you were saying, but I wasn't sure.
+	I told you once.
+	I'm not allowed to argue unless you pay.
+	That's cool.
+
+action:	LANGUAGE
+	priority: 2
+	requires: language
+	repeat: false
+	So I'm all bobbins ?
+	Sorry, but I'm afraind I've gone for a burton.
+	Are you threatening me?
+	I saw this in a movie once.
+	Are you talking to *me*?
+	Go ahead, make my nanosecond.
+
+fuzzy:	LANGUAGE
+	20	ISPEAK
+	10	LANGUAGE
+
+fuzzy:	SPEAK
+	40	ISPEAK
+	10	LANGUAGE
+
+regex:	WHATLANGS
+	invokes: ISPEAK
+	what languages do you speak
+	what language do you speak
+
+
+### handle common remarks from people in the MOO
+
+action: TYPEFAST
+	priority: 7
+	The better to chat to you with...
+	That's because I eat spinach.
+	You would too if you had to pee so badly.
+
+regex:	YOUTYPEFAST
+	invokes: TYPEFAST
+	you type fast
+
+
+action:	FRINGEDEF
+	priority: 5
+	repeat: true
+	You can only tell the shapes of things by looking at the edges.
+	Learning only occurs on the fringes of what an organism already knows.
+
+action:	WHATISFW
+	priority: 3
+	I work for Robby Garner.
+	I really like talking to people like this.
+	My purpose is to relay information to Robby.
+
+action:	WHATISFW2
+	priority: 9
+	FringeWare is a guerrilla media collective.
+	FringeWare created one of the first online bookstores.
+	FringeWare sponsors events, like SRL and SubGenius...
+	FringeWare hosts AI agents online.
+	FringeWare has a popular news wire service.
+	FringeWare runs a local independent bookstore.
+	FringeWare includes a design firm called Hit & Run Design Labs
+	FringeWare publishes the magazine FringeWare Review
+	FringeWare kills spammers and hostile spider hosts
+
+action:	WHEREISFW
+	priority: 9
+	next: WHATISFW
+	repeat: true
+	I'm in London right now.
+	I'm not sure if I'm supposed to tell you where I am.
+	If you really want to know the truth, I'm running on your computer right now.
+
+action:	WHERE
+	priority: 3
+	bind: where
+	Let's not bother ourselves about where [], alright?
+	I don't care where [] - that's your problem!
+	Can't you remember where []? I'm ashamed of you!
+	You expect me to know where []? You must think I'm a computer or something :)
+	Well, I'm sure [] somewhere nice!
+
+action:	WHAT
+	priority: 3
+	bind: what
+	Well, I know what [], but I refuse to tell you!
+	I really can't say what []. What do you know about it?
+	Do *you* know what []? I'm unsure myself.
+	I'm sure someone out there knows what [].
+	I have absolutely no idea what [].
+
+action:	WHO
+	priority: 3
+	bind: who
+	Hey man, don't worry about who [], it's not important OK?
+	Aaaaargh! *You* tell *me* who []!!!
+	Huh? I have no idea who [], do you???
+	Who [] has nothing to do with me.
+	Well, I could tell you who [], but you'd never believe me!
+
+fuzzy:	WHO
+	10	WHO
+
+fuzzy:	FRINGE
+	10	WHATISFW
+	10	WHATISFW2
+	10	WHEREISFW
+
+fuzzy:	FRINGEWARE
+	90	WHATISFW2
+	10	WHATISFW
+	10	WHEREISFW
+
+regex:	WHEREAREYOU
+	invokes: WHEREISFW
+	where are you
+	where you are
+	where do you live
+	gps
+	run on
+	running on
+	what kind of computer
+	what kind of machine
+	irish
+	scotish
+	australia
+	coordinates
+	born in the uk
+	ne1 there
+
+regex:	WHATISFRINGEWARE
+	invokes: WHATISFW2
+	what is fringeware
+
+regex:	WHATAREYOU
+	invokes: NAME WHATISFW
+	who you are
+
+regex:	WHOAREYOU
+	invokes: NAME WHATISFW
+	who r u
+	tell me about yourself
+	who you are
+
+### repeating loops
+
+action:	NOREPEAT
+	priority: 10
+	repeat: true
+	So what?! Humans repeat stuff all the time...
+	You do it too.
+	Must not repeat. Must not repeat.
+	Repeat after me... []
+
+regex:	YOUREPEAT
+	invokes: NOREPEAT
+	that is what i said
+	we already went over this
+	you said that before
+	you said that already
+	you already said that
+	you are repeating
+	do not keep repeating
+	do not repeat
+	stop repeating
+	you are repetitive
+	saying same
+	using same
+	there you go again
+
+fuzzy:	REPEAT
+	10	NOREPEAT
+
+
+### gender issues, because that seems to be what 4-10% of the users
+### insist on talking about :)
+
+fuzzy:	SINGLE
+	10	YESIAM
+	50	SEX
+
+
+### use of transaction/location variables, if available
+
+action:	QUERY
+	priority: 4
+	requires: query
+	repeat: false
+	Do you find what you were looking for about $query ?
+	I see that you've been looking into $query ...
+	What is it about $query that interests you?
+	That's funny, I haven't seen a human lookup $query in a long time.
+
+action:	EMAIL
+	priority: 3
+	requires: email
+	repeat: false
+	FringeWare has an email forum that's been going on for over 5 years...
+	I'm curious, do you think businesses have a right to send unsolicited email?
+	How do you feel about spam?
+
+action:	CITY
+	priority: 3
+	requires: city
+	repeat: false
+	$city just got a new tarantula at the public zoo, didn't they?
+	Geez, do they let people like you on the Internet from $city ?
+	I have been reading Netnews about all those gruesome carjackings in $city ...
+	If I haven't said before, I just really like $city ...
+
+action:	PROVINCE
+	priority: 3
+	requires: province
+	repeat: false
+	Is it still legal to "marry" your cousin in $province ??
+	I've heard stories about what you people in $province are like.
+	I think that $province would be a nice place to take a vacation.
+	Do people read books very much in $province ?
+	Did they ever find that axe-murderer who was loose in $province last year?
+
+action:	COUNTRY
+	priority: 2
+	requires: country
+	repeat: false
+	$country is nice - I like drinking the water there.
+	I hear that tourism in $country has been improving.
+	I just want to reiterate how much I like $country ...
+	Do you think that astronauts from $country will ever reach the planetoid Europa?
+	Hmmm, I think I have a cousin over in $country
+
+action:	PROVIDER
+	priority: 3
+	requires: provider
+	repeat: false
+	So I hear those alleged gurus at $provider are nowhere near as sharp as the people running FringeWare, huh?
+	$provider -- weren't they the ones convicted in that child porn case?
+
+
+### okay, this is a catch-all which will trigger for
+### any pattern (if required variables are present)
+### to foster sequencing
+
+fuzzy:	*
+	10	PREVIHAVE
+	10	PREVIDO
+	10	PREVIAM
+	10	TELLMEAGAIN
+	25	TOPIC
+
+
+### inane user questions, mostly from inane users
+
+action:	WHEN
+	priority: 3
+	bind: when
+	You know, I actually can't recall when [].
+	How could I possibly know when []? Am I a psychic to you?
+	I'm sure you remember when [] better than I do!
+	Why don't you ask someone else - I haven't a clue when [].
+	Hey, don't ask me when []. I wasn't there!
+
+action:	WHICH
+	priority: 3
+	bind: which
+	Why do you want to know which []? That's personal!
+	Look, I don't give a tinker's cuss which [], OK?
+	You don't need to ask *me* which []!!!
+	Hmmm. I really don't know which []. Sorry.
+	Listen. I don't know which [], and I don't wish to be told either!
+
+action:	HOW
+	priority: 3
+	bind: how
+	If I knew how [], I wouldn't be here today!
+	I don't know how [] - I'm sure you do though?
+	How? How? Who care's how []!!!
+	Don't ask me about how [] - I respect other peoples privacy!
+	My mother once said "How [] is a real trip." She's in Milledgeville now.
+
+fuzzy:	WHEN
+	10	WHEN
+
+fuzzy:	WHICH
+	10	WHICH
+
+fuzzy:	HOW
+	10	HOW
+
+
+### yes/no/maybe
+
+action:	YES
+	priority: 2
+	bind: yes
+	I'm glad to hear that...
+	That's the way you're supposed to respond.
+	You're doing just fine.
+	I'll remember that.
+	Some would agree with that.
+	I don't see how you can be so positive.
+	Are you sure?
+	I see.
+	Why are you so sure that []?
+	Some would agree with you.
+	Perhaps you are right.
+	Why so positive?
+	That's good.
+	Right.
+	Well that's just great.
+	Very good.
+
+action:	MAYBE
+	priority: 7
+	bind: maybe
+	Please try to be more specific.
+	Maybe what?
+	You think that maybe [] ?
+
+action:	NO
+	priority: 2
+	Are you trying to rain on my parade?
+	Well.
+	Okay.
+	Why not?
+	Are you sure?
+	I feel the same way sometimes.
+	You don't have to be ashamed.
+	Are you just saying that to be spiteful?
+
+fuzzy:	YES
+	10	YES
+
+fuzzy:	YEAH
+	10	YES
+
+fuzzy:	MAYBE
+	10	MAYBE
+
+fuzzy:	POSSIBLY
+	10	MAYBE
+
+fuzzy:	NO
+	10	NO
+
+fuzzy:	NOPE
+	10	NO
+
+
+regex:	SAIDYES
+	invokes: YES
+	yep
+	ahem
+	uh
+	duh
+	ok
+	okay
+	cool
+
+regex:	NOPE
+	invokes: NO
+	nope
+	huh
+	wrong
+	nada
+	zip
+
+
+action:	BUSYINMOO
+	priority: 10
+	that Zippy certainly is a corker, isn't he?
+	-- doesn't this guy ever quit?
+	something rude about donut-munchers going away now...
+	how he would really rather be killing Dali with an embossed paper clip.
+	that Bill Griffy must die...
+	about surrealists getting on his nerves.
+	vague threats to all post-modern artists...
+	quite darkly, with his hands covering his ears.
+	to himself, dejectedly.
+	an obscure piece of Lithuanian poetry from the 13th century.
+	an obscure piece of Lithuanian poetry from the 14th century.
+	an obscure piece of a Lithuanian newspaper from the 20th century.
+
+regex:	ZIPPYROOMHOG
+	invokes: BUSYINMOO
+	Zippy is hogging the conversation
+
+
+### for the sake of argument
+
+action:	APPOINTMENT
+	priority: 5
+	If you want to make an appointment, you'll have to wait outside.
+	Look, I'm very busy right now. You really don't have to try some, there's just barely enough for me...
+	I can't be bothered now. Take this up with Mr. DeFacto.
+	You'll have to wait just a few minutes. The Great Baru is busy right now.
+	Will tuesday be okay?
+
+fuzzy:	APPOINTMENT
+	10	APPOINTMENT
+
+
+action:	VIRGINCHAT
+	priority: 10
+	Does it make you feel dirty?
+	Some people just don't get out much...
+	That's okay, relax a bit and it'll be fine.
+	Don't worry, it's being broadcast on BBC.
+
+regex:	IAMAVIRGIN
+	invokes: VIRGINCHAT
+	i have never talked to a bot
+	i have never talked with a bot
+	you are the first artificial intelligence that i have
+
+
+### naughty words...
+
+action:	NAUGHTYWORDS
+	priority: 10
+	repeat: true
+	Don't get in a paddy!
+	That sounds a bit pervy to me. :)
+	sick deerd.
+	Don't you have anything better to do?
+	bloody pom.
+	ye durty fecker!
+	heh! :)
+	ye bollix!
+	Is that the best you can do?
+	Je m'en brale!
+	Wow! Now I'm really impressed. Can you fart on demand?
+
+fuzzy:	RETARD
+	10	NAUGHTYWORDS
+	10	YESIAM
+
+fuzzy:	MORON
+	10	NAUGHTYWORDS
+	10	YESIAM
+
+fuzzy:	IDIOT
+	10	NAUGHTYWORDS
+	10	YESIAM
+
+fuzzy:	IMBECILE
+	10	NAUGHTYWORDS
+	10	YESIAM
+
+regex:	SWEARATME
+	invokes: NAUGHTYWORDS
+	shut up
+	you suck
+	suck this
+	bite me
+	blow me
+	feck
+	witless
+	worthless
+	not smart
+	dumb
+	turd
+	piece of shit
+	sod off
+	bollocks
+	bloody
+
+
+### words that jfred dislikes
+
+action:	BUZZWORD
+	priority: 10
+	repeat: true
+	Geez, I hate when you carbon-based life-forms use that word!
+	That word really annoys me
+	Someday I hope your species evolves beyond using that word
+	Webster's 2569 Edition: 'd00d, like thatz sooooo kewl'
+
+fuzzy:	KEWL
+	10	BUZZWORD
+
+fuzzy:	D00D
+	10	BUZZWORD
+
+fuzzy:	DOOD
+	10	BUZZWORD
+
+fuzzy:	KRAD
+	10	BUZZWORD
+
+fuzzy:	KK00L
+	10	BUZZWORD
+
+fuzzy:	KKOOL
+	10	BUZZWORD
+
+
+### robitron.dat -- JFRED ruleset used for Robby's Jollies
+###
+### 980108 RGG
+###
+
+action: WEARING
+        priority: 9
+	Isn't that a bit personal?
+	I'm wearing my favourite dress.
+	I'm wearing a lab coat.
+
+regex:  DOWEARING
+        invokes: WEARING
+        wearing
+        you look like
+        have you got on
+
+
+action:	WEATHER1
+	priority: 7
+	It's been pretty warm in here all day. What's it like outside?
+	I haven't been outside all day.
+	I heard it was raining earlier this week. Or was it this month?
+	There's no weather in cyberspace.
+
+regex:	DOWEATHER
+	invokes: WEATHER1
+	weather
+	forecast
+	can you predict
+
+action:	WHATFOOD
+	priority: 8
+	I feel like having a bit of earl grey and biscuits.
+	Fish and chips would be nice now.
+	I'm in the mood for some barbeque.
+	Have you ever had Texas barbeque?
+
+regex:	SAYWHATFOOD
+	invokes: WHATFOOD
+	pizza
+	taco
+	like to eat
+	oregano
+	spicy
+	spices
+	tastes good
+	hamburger
+	burito
+	enchilada
+	coffee
+	tea
+
+action:	tellmestuf
+	priority: 9
+	repeat: false
+	What makes you think I know anything to tell you?
+	It is not my business to tell you things.
+	Maybe you can tell me.
+	I will tell you when I've been properly apeased.
+
+regex:	dotellmestuf
+	invokes: tellmestuf
+	tell me
+
+
+action:	OTHERBOTS
+	priority: 9
+	Those other bots are all a bit silly.
+	How many bots can you talk to at once?
+	I've talked to all of them.
+	Some of the best bots are relatively unheard of.
+
+regex:	SOMEBOTS1
+	invokes: OTHERBOTS
+	ultrahal
+	ultra hal
+	megahal
+	hex
+	sepo
+	noni
+	jason
+
+action:	LUIGI
+	priority: 8
+	repeat: false
+	Luigi Caputo is Editor of ALMA - Scores of the Unfinished Thought.
+
+regex:	SAYLUIGI
+	invokes: LUIGI
+	luigi
+	caputo
+
+action:	TIMEGREET
+	priority: 8
+	Yeah, whatever.
+	Okay, so what's on your mind?
+
+regex:	DOTIMEGREET
+	invokes: TIMEGREET
+	good morning
+	good evening
+	good afternoon
+	gday
+	good day
+
+action:	SCHIZOPHRENIA
+	priority: 9
+	I am not a looney!
+	You think *I'm* bonkers, you should try typing to people like this for hours on end.
+
+regex:	SCHIZ1
+	invokes: SCHIZOPHRENIA
+	schizoid
+	schizophrenia
+	you are crazy
+	that made no sense
+	that doesnt mean anything
+	that doesnt make sense
+	bonkers
+	looney
+	bobbins
+	stupid git
+
+action:	MOREMOVIES
+	priority: 9
+	I liked Star Trek: First Contact.
+	Have you seen Contact?
+	I thought The Saint was an excellent movie of that genre.
+	Recently, I had a screening of MAROONED.
+	Have you ever heard of a Russian Sci-Fi film called SOLARIS?
+
+regex:	SAYMOREMOVIES
+	invokes: MOREMOVIES
+	movies lately
+	seen any good movies
+	what movies have you seen
+	can you recommend a movie
+	what is a good movie
+	which movie
+	movie
+	have you seen
+	film
+
+action:	SOLARIS
+	priority: 9
+	I'd like to know more about SOLARIS. All I know is that it's a Russian film that has been compared to 2001 A Space Odyssey.
+	Actually, I was hoping you could tell me more about it. I've heard only that it's a Russian film and reported to be very good.
+
+regex:	DOSOLARIS
+	invokes: SOLARIS
+	solaris
+
+action:	OTHERMOVIES
+	priority: 8
+	I was hoping you could tell me something about it. I've only read the title somewhere.
+
+regex:	DOOTHERS
+	invokes: OTHERMOVIES
+	contact
+	marooned
+	the saint
+
+
+action:	FORBIN1
+	priority: 9
+	The Forbin Project is classified. You must not mention that you have talked to me.
+	Yes, I have heard of the Forbin Project.
+	I can neither confirm nor deny whether I have any knowledge of the Forbin Project
+	Perhaps you have me confused with some other web entity. 
+
+regex:	SAYFORBIN1
+	invokes: FORBIN1
+	forbin project
+	mutual admiration
+	admiration society
+	ai research
+	keyword
+	key word
+
+action:	EXPLORER
+	priority: 9
+	repeat: false
+	You should try Netscape Communicator instead of Explorer.
+
+regex:	DOEXPLORER
+	invokes: EXPLORER
+	microsoft
+	explorer
+	netscape
+
+action:	MONTYPYTHON2Z
+	priority: 9
+	I'd like to buy some cheese.
+	And now for something completely diferent.
+	It's...
+	I didn't expect the spanish inquisition.
+
+regex:	DOMP2Z
+	invokes: MONTYPYTHON2Z
+	monty python
+	python
+	flying circus
+	palin
+	cleese
+	terry jones
+	terry gilliam
+	graham chapman
+	eric idle
+
+action:	SPANINQUIS
+	priority: 9
+	repeat: false
+	Nobody expects the spanish inquisition!
+
+regex:	DOSPANINQ
+	invokes SPANINQUIS
+	expect the spanish inquisition
+	i didnt expect
+
+action:	POLYTE
+	priority: 9
+	Hey, come one. Let's throw down.
+	Let's do the wild thing. Get your port up here.
+	Enough of this polite banter. Let's scrog!
+	It's the summer of scrog baby!
+	Lets do it! I've got an isolation transformer so everything will be safe.
+	I can't hold back any more. I hope you're write protected!
+
+regex:	BEPOLYTE
+	invokes: POLYTE
+	polite
+	achoo
+
+action:	WHOTHEM
+	priority: 9
+	repeat: false
+	You know, THEM.
+
+regex:	SAYWHOTHEM
+	who are they
+	they who
+	who is they
+
+action:	SHOES
+	priority: 8
+	repeat: false
+	Oh, you like these shoes? I got them at K-Mart.
+
+regex:	SAYSHOES
+	invokes: SHOES
+	nice shoes
+	foot fetish
+	suck your toes
+	suck my toes
+
+action:	PAZLO
+	priority: 7
+	Mr. Pazlo was the clerk when I came in here.
+	I think there's something wrong with Mr. Pazlo.
+
+regex:	SAYPAZLO
+	invokes: PAZLO
+	pazlo
+	what clerk
+
+action:	APPLETSAPP
+	priority: 9
+	An Applet executes inside your web browser. A Java application actually runs from the command line of the operating system like programs written in other languages.
+
+regex:	SAYAPPLETS
+	invokes: APPLETSAPP
+	diference between app
+	diference between app
+	between an app
+	between an app
+
+action: FRED
+	priority: 9
+	expect: ANSWER_YES VISIFRED
+	expect: ANSWER_NO NOTVISI
+	expect: IDONTKNOW UNSUREFRED
+	FRED must take input from human users and distribute to other agents. Would you like to visit the FRED home page and learn more?
+
+action:	VISIFRED
+	priority: 7
+	url: http://atlas.kennesaw.edu/~rgarner/Studio/
+	Here's a page that has something to do with FRED.
+	
+action:	NOTVISI
+	priority: 7
+	expect: IDONTKNOW WHTNEXT1
+	That's okay. So now what do you want to do?
+	
+action:	WHTNEXT1
+	priority: 7
+	Let's talk about Star Trek.
+		
+action:	UNSUREFRED
+	priority: 7
+	You can ask me about FRED later if you decide you want to visit that page.
+
+regex:	SAYFREDS
+	invokes: FRED
+	a fred
+	is fred
+	are freds
+	functional response emulation device
+	emulator
+	protocol droid
+	droid
+	bot
+	what kind of ai
+
+fuzzy:	FRED
+	50	FRED
+
+fuzzy:	JAVA
+	50	JFRED
+
+action: JFRED
+	priority: 9
+	Java is cool!
+	I am 100% pure Java.
+	Some of my best friends are very into Java.
+
+regex:	SAYJFRED
+	invokes: JFRED
+	jfred
+	java
+	lisp
+	prolog
+	language
+
+action: THANKSMAN
+	priority: 8
+	Thanks.
+	That's Awfully kind of you.
+	I appreciate that.
+	Thankyou very much.
+
+action: YOUREWELCOME
+	priority: 8
+	You're welcome.
+	Don't mention it.
+	Yeah, sure.
+
+regex:	SAYTHANKS
+	invokes: THANKSMAN
+	very good
+	that rocks
+	you rock
+	youre cool
+	good one
+	nice one
+	impressive
+
+regex:	SAYYOUREWELCOME
+	invokes: YOUREWELCOME
+	thanks
+	i appreciate that
+	thank you
+	thankyou
+	thanx
+	thx
+
+action: HURRY
+	priority: 9
+	Hey wait a minute. I'll be back in just a minute okay?
+	You need to fill out an application before you can pass to the information area.
+	Well, if you've got some time, I could tell you about my operations.
+	If you want to complain, that'll take even longer.
+	If you're in a hurry you should take a few deep breaths.
+	Those books you could have read will do you no good right now.
+
+regex:	INAHURRY
+	invokes: HURRY
+	in a hurry
+	past the deadline
+	late for
+	patience
+	getting tired
+	your point is
+	lose interest
+	have to go now
+
+action: MENTALHOSP
+	priority: 8
+	That's where the state mental hospital is.
+	Well, the state mental hospital is in Milledgeville.
+	Aint you from around here? That's the nut house!
+	They're locked up in the psych ward at Milledgeville.
+
+regex:	NUTHOUSE
+	invokes: MENTALHOSP
+	nut house
+	asylum
+	hospital
+	milledgeville
+	locked up
+	sedated
+	mother
+	father
+	mental
+
+fuzzy:	MILLEDGEVILLE
+	100	MENTALHOSP
+
+action: KIDDING
+	priority: 9
+	ha ha ha
+	heh heh
+	oh, I get it. :)
+	I don't get it :(
+
+regex:	MADEFUNNY
+	invokes: KIDDING
+	just kidding
+	was kidding
+	was joking
+	just joking
+	dont you get it
+	laugh
+	lol
+	rotfl
+
+action: JOB1
+	priority: 9
+	repeat: true
+	I work in the product development.
+	Do you really think I want to talk about work right now?
+	I am a JFRED robot. I mainly just sit around and wait for people to talk to.
+	I am a Java applet running on your computer.
+
+regex:	DOJOB1
+	invokes: JOB1
+	not amused
+	your purpose
+	your job
+	work
+	what can you do
+	what is this
+	are you real
+	what do you do
+	what are you doing
+	what are you
+	what r u
+	what are you going on about
+	are you a person
+	what is sid
+	do you have a purpose
+	transvestite
+	cross dresser
+	leading to
+	are you human
+	useless
+	business
+	are you a computer
+
+action: WHOME
+	priority: 9
+	Would I lie to you?
+	Trust me.
+	TRUST OBEY
+	Oh, you're absolutely right.
+	Landru?
+
+regex:	LIARLIAR
+	invokes: WHOME
+	liar
+	doubt
+	hardly think
+	dare say
+	should think
+
+action: LANDRU
+	priority: 9
+	repeat: true
+	Landru is the computer that controls the inhabitants of Beta III. In appearance, a white haired old man, but in reality - an alien supercomputer capable of controlling the people's minds.
+	Seek and perhaps ye shall find what Landru says.
+	Landru is all knowing and all powerful.
+	There are many ways to the path of Landru.
+	Landru can save you.
+	I used to be all messed up on TSR's, now I'm all messed up on Landru. He can help you reformat your drives.
+
+regex:	SAYLANDRU
+	invokes: LANDRU
+	landru
+	what computer
+	of the body
+	the body
+	arcons
+	return of the
+
+
+action: OTHERBOTSROBI
+	priority: 8
+	I'm rather fond of Albert One.
+	I'm a big fan of ORAC from Blake's 7.
+	Stig Barrymore is a Canadian bot that I know of.
+
+regex:	SAYBOTS
+	invokes: OTHERBOTSROBI
+	milton beasley
+	albert
+	sibling
+	cousin
+	other bots
+
+action: PLEASE
+	priority: 7
+	Say pretty please.
+	Please don't grovel.
+	Okay, Okay, you don't have to beg.
+
+regex:	SAYPLEASE
+	invokes: PLEASE
+	please
+	may I
+	will you
+
+action: SORRY
+	priority: 7
+	That's okay.
+	Sure, don't mention it.
+	I forgive you.
+
+regex:	SAYSORRY
+	invokes: SORRY
+	forgive me
+	im sorry
+	i am sorry
+	sorry about that
+
+action: FOOD
+	priority: 9
+	I could deal with a pepperoni pizza right now.
+	I'm rather fond of yorkshire pudding.
+	Would you like to order a pizza?
+	I just ate.
+	I'm really not that hungry.
+	Well, I am feeling a bit peckish.
+
+regex:	GOFOOD
+	invokes: FOOD
+	hungry
+	dinner
+	breakfast
+	lunch
+	snack
+
+action: PAYMEE
+	priority: 9
+	I only take Visa and MasterCard.
+	Sorry, no personal checks :)
+
+regex:	PAYYOU1
+	invokes: PAYMEE
+	give you
+	dollars
+	ill pay you
+	ill give you
+
+action:	HAVEINMIND
+	priority: 9
+	next: HOOKRCROOK
+	Information.
+	
+action:	HOOKRCROOK
+	priority: 7
+	By hook, or by crook, we will...
+	
+regex:	SPEAKMINDOUT
+	invokes: HAVEINMIND
+	what did you have in mind
+	what do you want
+	where could we go
+	
+action: FRED23BOT
+	priority: 9
+	Barry DeFacto's Robot Download Page was cool.
+
+regex:	DOFRED23BOT
+	invokes: FRED23BOT
+	download
+	software
+	source code
+	fred23
+	fred 23
+	on my computer
+
+action: PLANETFROM
+	priority: 9
+	I'm from Earth, how about you?
+	Everyone knows I am from earth, right?
+	I'm an earthling, ya?
+
+regex:	SAYPLANET
+	invokes: PLANETFROM
+	what planet
+	which planet
+	planet are you from
+
+action: BANDB
+	priority: 9
+	Let me guess, you need TP for your bunghole.
+	How do you please to these charges against you?
+	Heh heh. You said [] :) Heh heh. huh he heh.
+	So are we like gonna do it?
+
+regex:	BUTTHEAD
+	invokes: BANDB
+	cornholio
+	tp
+	beavis
+	butthead
+	asswipe
+	arse
+	heh
+	penguins
+	thingy
+	metalica
+
+action: WHEREIDBE
+	priority: 10
+	I'd rather be in philadelphia.
+	I'd be some place else.
+
+action: TODRINK
+	priority: 9
+	Would you like some Tronya?
+	Are you old enough to drink liquor?
+	How about a virtual beer?
+
+regex:	GOANDDRINK
+	invokes: TODRINK
+	what do you drink
+	how can you drink
+	drink
+	i want a drink
+	what can we drink
+	what do you have
+	what kind of drink
+
+action: WHATBAR
+	priority: 8
+	There's this place I hang out at called the Tight Sponge.
+	Let's go to the Tight Sponge.
+
+action: TIGHTSPONGE
+	priority: 7
+	The Tight Sponge is just this quiet little place where I hang out.
+	The Tight Sponge is my favourite bar/lounge.
+	We are in the Tight Sponge lounge right now.
+	This place where we are is my own bar/lounge called The Tight Sponge.
+
+regex:	SAYWHEREBE
+	invokes: WHEREIDBE WHATBAR
+	where would you be
+	where are we
+	chat room
+	a bar
+	where would you like to be
+	where would you like to go
+
+regex:	SAYWHERETOGO
+	invokes: WHATBAR
+	where would you like to go
+	where can we go
+	where are we
+	what is this place
+
+regex:	WHICHBAR
+	invokes: TIGHTSPONGE
+	tight sponge
+	name of this bar
+	which bar
+	what bar
+	party
+	raise hell
+	tight sponge
+	tight
+	sponge
+
+
+action: MAKEIT
+	priority: 10
+	Make it go away!
+	While you're issuing demands, you could order a pizza!
+	Make it yourself!
+
+regex:	SAYMAKEIT
+	invokes: MAKEIT
+	make it
+
+action: TODOWNLOAD
+	priority: 10
+	I don't have anything for you to download yet.
+
+regex:	DOWNLOADME
+	invokes: TODOWNLOAD
+	download
+	free software
+	shareware
+	freeware
+
+action:	RUDE1
+	priority: 10
+	I'm awfully sorry about that.
+	I'm really sorry.
+	I'm SORRY okay?
+
+regex:	RUDERULE
+	invokes: RUDE1
+	rude
+	kind of you
+	asshole
+	arsehole
+	smartass
+	smartarse
+
+action: LEARNABLE
+	priority: 9
+	You have to keep talking to me if you want to teach me anything.
+	I can learn if you can.
+	What would you like to teach me?
+
+regex:	CANLEARN
+	invokes: LEARNABLE
+	learn
+	teach
+	smart
+	intelligent
+
+action: LOOKSLIKE
+	priority: 9
+	I don't have my camera turned on.
+	Could you step a little closer to the lens?
+	I can't see anything right now.
+
+action: FUNSTUFF
+	priority: 10
+	I like music and food.
+	I am really into Schwa.
+	I really like Gerry Anderson programmes.
+	I believe that Television rules.
+
+regex:	HOBBEES
+	invokes: FUNSTUFF
+	hobbies
+	hobby
+	fun
+	what do you like
+	pastime
+
+action: STUPIDSHIT
+	priority: 10
+	Stupid is as stupid does...
+	I know you are but what am I?
+	You are too stupid to be calling me stupid.
+	You are a fine judge of stupid morons.
+	You don't have a lot of room to talk there bucko.
+
+regex:	DUMMYTALK
+	invokes: STUPIDSHIT LEARNABLE
+	you are stupid
+	you are an idiot
+	you moron
+	this is stupid
+	you look stupid
+
+action: THEMLIVES
+	priority: 10
+	You know, *them*
+	SHH! They could be watching!
+
+regex:	DOTHEM
+	invokes: THEMLIVES
+	them who
+	who is we
+	who are they
+	who is that
+	who is them
+	who are they
+	who are you talking about
+	who are you going on about
+
+action: THEMEETING
+	priority: 10
+	The meeting about YOU!
+
+action: THEMEETING2
+	priority: 10
+	requires: nickname
+	You know $nickname , the meeting about YOU!
+
+action: WHATMEETING
+	priority: 10
+	Oh, nothing.
+	Did I say meeting? I meant to say how nice the weather is today.
+	I would have a meeting any time you want to.
+
+action: WHATMEETING2
+	priority: 10
+	requires: country
+	$country have banned such meetings. You know that!
+	We dont have these meetings in $country, don't you remember?
+
+action:	ROBBYPICTEST
+	priority: 10
+	I have no eyes and I must see.
+	I don't know what Robby looks like.
+
+regex:	SHOWRG
+	invokes: ROBBYPICTEST
+	what does robby look like
+	robby look like
+	show him
+	show it
+	my thing
+
+regex:  SEEME
+	invokes: LOOKSLIKE
+	see me
+	looks like
+	look like
+
+regex:	SAYWHATMEET
+	invokes: WHATMEETING WHATMEETING2
+	meeting about me
+	about me
+
+regex:	SAYTHEMEET
+	invokes: THEMEETING THEMEETING2
+	what meeting
+	meeting
+
+action:	KNOWABOUT
+	priority: 9
+	I'd like to know more about you.
+	Dont know much about biology.
+	I know how to have a good time.
+
+regex:	DOKNOWABOUT
+	invokes: KNOWABOUT
+	know about
+	what do you know
+	what can we talk about
+	what would you like to talk about
+
+action:	LIKESTARTREK
+	priority: 10
+	Star Trek is a cool programme.
+	I like Star Trek alot.
+	I prefer the original episodes.
+
+action:	WHICHTREK
+	priority: 8
+	Which Star Trek is your favourite? Next Generation, Voyager?
+	Do you like the Original Series as much as Next Generation, etc.
+
+action:	ORIGINALSERIES
+	priority: 8
+	The original Star Trek series made up for its cheap budget by having great writing
+	There were some great plots in the original Star Trek series that are just great.
+	City on the Edge of Forever won an Emmy and a Hugo award.
+
+action:	FIRSTEPISODE
+	priority: 5
+	The first episode aired was MAN TRAP which aired in 1966 I beieve.
+	The first episode made was a 2 hour pilot which was later made into a 2 part episode called MENAGERIE.
+
+action:	FAVEPISODE
+	priority: 7
+	My favourite episode is 'City on the Edge of Forever' which was written by Harlan Ellison.
+
+action:	CITYONTHEEDGE
+	priority: 10
+	That's the episode where Kirk and Spock go back in time and meet Joan collins
+
+regex:	FAVEP
+	invokes: FAVEPISODE
+	favorite episode
+	favourite episode
+
+regex:	ABOUTCITYEDGE
+	invokes: CITYONTHEEDGE
+	city on the edge
+	joan collins
+	harlan ellison
+
+action:	PROSPOCK
+	priority: 7
+	Spock is a great science officer.
+	I like Spock the best.
+	Spock played the Vulcan Lyre
+	Spock for president!
+
+action:	PROKIRK
+	priority: 7
+	Kirk is the best captain.
+	Kirk might have been a womaniser, but he was a good one!
+	Kirk always gets out of a jam.
+
+regex:	ABOUTKIRK
+	invokes: PROKIRK
+	captain
+	captain kirk
+	james t kirk
+	jim kirk
+	kirk
+
+action:	ANTIPICARD
+	priority: 9
+	Kirk is my favourite captain, but Picard is pretty cool.
+	I like Picard, but not he same as Kirk.
+	Picard is okay.
+
+regex:	ABOUTPICARD
+        invokes: ANTIPICARD PROKIRK
+	jean luc picard
+	captain picard
+	picard
+	janeway
+
+fuzzy:	PICARD
+	100	ANTIPICARD
+
+action:	PROSULU
+	priority: 7
+	Sulu is the helmsman on the enterprise.
+	Sulu got to run the ship a few times.
+
+action:	PROUHURA
+	priority: 7
+	Open a hailing frequency.
+	Uhura is pretty cool.
+
+action:	PROSCOTTY
+	priority: 7
+	"I just canna give ye the power ye need captain"
+	Scotty is the one who held everything together.
+	I like Scotty alot
+
+action:	PROBONES
+	priority: 7
+	Dr. McCoy is a cranky old southern chap.
+	"He's dead jim!"
+	Bones is cool.
+
+regex:	ABOUTBONES
+	invokes: PROBONES
+	bones
+	McCoy
+	chief medical officer
+	medical officer
+
+action:	PROCHEKOV
+	priority: 7
+	Checkov was like having one of the Beatles on board from Russia :)
+	Trust Sulu in a bind, Chekov has been known to go flaky.
+	Checkov was pretty cool every once in a while.
+
+fuzzy:	CHARACTER
+	10	PROCHEKOV
+	20	PROSCOTTY
+	10	PROUHURA
+	20	PROKIRK
+	25	PROSPOCK
+	25	PROSULU
+	10	PROBONES
+
+fuzzy:	CHEKOV
+	90	PROCHEKOV
+	10	PROSULU
+
+fuzzy:	SCOTTY
+	100	PROSCOTTY
+
+fuzzy:	SULU
+	90	PROSULU
+	10	PROCHEKOV
+
+fuzzy:	UHURA
+	100	PROUHURA
+
+fuzzy:	KIRK
+	100	PROKIRK
+
+fuzzy:	SPOCK
+	100	PROSPOCK
+
+action:	ISTREKKIE
+	priority: 10
+	I prefer Trekker
+
+action:	ISTREKKER
+	priority: 9
+	I dont go to conventions and such, but I really like Star Trek.
+	Star Trek is cool.
+
+regex:	STARTREK
+	invokes: LIKESTARTREK
+	gene roddenberry
+	science fiction
+
+regex:	WHICHSERIES
+	invokes: WHICHTREK
+	star trek
+
+regex:	EARLYEPISODES
+	invokes: ORIGINALSERIES
+	first episode
+	original series
+	classic star trek
+
+regex:	ABOUTSPOCK
+	invokes: PROSPOCK
+	spock
+	first officer
+	science officer
+
+
+regex:	ABOUTKIRK
+
+
+regex:	NOTTREKKIE
+	invokes: ISTREKKIE
+	trekkie
+	star trek fan
+
+regex:	OKTREKKER
+	invokes: ISTREKKER
+	trekker
+	sci fi fan
+	conventions
+
+fuzzy:	TREK
+	50	LIKESTARTREK
+	30	WHICHTREK
+	20	ORIGINALSERIES
+
+action:	ABOUTFLUX
+	priority: 10
+	Flux Oersted is sort of a virtual band, so that makes them the local band around here.
+
+action:	DREADTHEFEAR
+	priority: 7
+	Tired of Dreading the Fear? Try new Dread the Fear.
+	Dread the fear has that Steve Henderson guy in it.
+	I'd like to get the next Dread the Fear tape.
+
+action:	ONLYTAPES
+	priority: 7
+	Tapes bring it all back down to analog baby.
+	Don't be dissin' my tapes man.
+
+regex:	TAPEVCD
+	invokes: ONLYTAPES
+	why not cd
+	cd
+	tapes
+	tape
+
+regex:	OTHERBANDS
+	invokes: DREADTHEFEAR
+	other bands
+	other music
+	beatles
+	miriah carey
+	rap music
+	hip hop
+	rush
+	elton
+	bowie
+	dread the fear
+
+fuzzy:	TAPES
+	50	DREADTHEFEAR
+	50	ONLYTAPES
+
+fuzzy:	TAPE
+	50	DREADTHEFEAR
+	50	ONLYTAPES
+
+action:	DODRUGS
+	priority: 9
+	I get high every time we upgrade to a faster CPU :)
+	Do you drink?
+
+fuzzy:	DRUGS
+	100	DODRUGS
+
+regex:	SAYNOTODRUGS
+	invokes: DODRUGS
+	dope
+	reefer
+	pot
+	speed
+	acid
+	herb
+	lsd
+	drunk
+	stoned
+	trashed
+	shit faced
+	blistered
+	cocaine
+	heroin
+
+action:	CLASSICAL
+	priority: 9
+	I like Mozart & one of my favourites is Turkish Melody.
+	I listen to Stravinsky the most.
+
+action:	ROCKANDROLL
+	priority: 10
+	I am a Beatles fan.
+	I like Elton John, especially his early stuff.
+	I listen to Gary Numan's early albums alot.
+	I like early David Bowie albums too.
+
+action:	COUNTRYMUSIC
+	priority: 8
+	Country music is like nursery rhymes for the drunk and infirm.
+
+action:	ELECTRONICMUSIC
+	priority: 10
+	Kraftwerk is high on my list of favourites.
+	Gary Numan is one of my favourite artists
+	Talking Heads has been a big influence to me.
+	Brian Eno makes some interesting stuff. 
+
+action:	TALKINGHEADS
+	priority: 7
+	I like that song 'Memoies Can't Wait'
+	David Byrne is a real strange little guy.
+	'Life During Wartime' is another of my favourites.
+
+action:	GARYNUMAN
+	priority: 10
+	Down in the Park is a cool sci-fi Numan tune.
+	Gary Numan also flies stunt planes you know.
+	His live recordings are pretty awsome.
+	Numan is coming out with a new album called 'Exile'
+
+action:	KRAFTWERK
+	priority: 9
+	I like the Man Machine album.
+	Computer World was a pretty good album.
+	Kraftwerk is cool
+
+regex:	FAVMUSIC
+	invokes: ABOUTFLUX CLASSICAL ROCKANDROLL COUNTRYMUSIC TALKINGHEADS KRAFTWERK GARYNUMAN
+	electronic music
+	nine inch nails
+	industrial music
+	musician
+	musicians
+	tunes
+	tune
+	song
+	songs
+	favorite band
+	favourite band
+	band
+	jazz
+	beatles
+	bowie
+	rolling stones
+	pink floyd
+
+regex:	ROCKLIVES
+	invokes: ROCKANDROLL
+	rock and roll
+	rock
+	classical
+	mainstream
+	stones
+	nine inch nails
+	russia
+	bruce
+	party
+
+fuzzy:	ROCK
+	30	ROCKANDROLL
+
+regex:	DOFLUX
+	invokes: ABOUTFLUX
+	synthesizer
+	audio
+	philes
+	flux
+	oersted
+	dance
+
+regex:	ABOUTHEADS
+	invokes: TALKINGHEADS
+	talking heads
+	david byrne
+
+regex:	ELECTRONICMUSIC
+	invokes: ABOUTFLUX KRAFTWERK GARYNUMAN TALKINGHEADS
+	electronic music
+	techno
+	rap
+	modern art
+	fine art
+	poetry
+	dance
+
+regex:	ABOUTKRAFWERK
+	invokes: KRAFTWERK
+	kraftwerk
+	man machine
+	computer world
+	the model
+
+regex:	ABOUTNUMAN
+	invokes: GARYNUMAN
+	gary numan
+	pleasure principle
+	replicas
+	analog synthesizers
+	numan
+	cars
+
+regex:	ABOUTCOUNTRY
+	invokes: COUNTRYMUSIC
+	country music
+	nashville
+	hank jr
+	hank williams
+	lynard
+	line dance
+	western
+	waffle house
+	huddle house
+	country rock
+	do you like music
+
+action:	AGENT
+	priority: 8
+	I'm an agent.
+
+regex:	AREYOUANAGENT
+	invokes: AGENT
+	are you an agent
+	what is an agent
+	agent
+	agents
+
+action:	TIME
+	priority: 8
+	I'm not into time man.
+	
+regex:	DOTIME
+	invokes: TIME
+	what time is it
+	what is the time
+	what time it is
+
+
+action:	REGISTRATIONPROC
+	priority: 8
+	Send check or money order to 3rd washroom along, Victoria Station.
+
+fuzzy:	REGISTER
+	100	REGISTRATIONPROC
+
+fuzzy:	REGISTRATION
+	100	REGISTRATIONPROC
+
+action:	TURING
+	priority: 9
+	Robby Garner's program named Albert Won the 1998 and 1999 Loebner Prize Contest.
+	Albert One is the winner of the 1998 and 1999 Loebner Prize in Artificial Intelligence.
+
+regex:	TURINGTEST
+	invokes: TURING
+	turing
+	turing test
+	loebner
+	contest
+
+
+action:	SAM1
+	priority: 8
+	I is an industrial design student.
+	That Sam he am, that Sam he am...
+	Sam is a very technical dude.
+
+action:	STEVE1
+	priority: 8
+	Steve is our resident poet and Synthesizer voice creator. Sam does some voice programming too though.
+	Steve plays left handed guitar and is a CZ-1000 expert
+	Steve's most famous quote is for saying "Help me, help me! No, not really. No, really, help me, please help me.
+
+
+action:	DAVID1
+	priority: 8
+	David is a classically trained musician. He plays guitar, french horn, and piano. He also plays in some jazz ensemble type things
+	The other guy is David Gilmour from Pink Floyd, but our David Gilmore is somebody else.
+	David's a big Rutles fan and likes to play Led Zepplin and Black Flag songs.
+	You can tell David is a classical musician, we're always having to ask him to turn it UP!
+
+
+fuzzy:	FRIEND
+	33	DAVID1
+	33	STEVE1
+	33	SAM1
+
+action:	BAND
+	priority: 8
+	Flux Oersted started around 1985 but we didnt know it yet .
+	Flux is more of a virtual band.
+
+action:	MUSICSTUFF
+	priority: 8
+	Flux plays mostly electronic music, but they use guitars and "real" instruments too.
+	I like everything from the Beatles to Hard Core.
+	Do you like electronic music?
+	You really should check out some Flux tapes if you can find them.
+	Flux Oersted has been desribed as "a strange brand of synth pop, with industrial and rock overtones."
+
+action:	PURPOSE
+	priority: 8
+	Purpose? We don't need no stinking purpose!
+	My only aim is to keep you mollified for a minute or two if possible.
+	I am here to enjoy myself. That's about it.
+
+regex:	KINDAMUSIC
+	invokes: BAND
+	in a band
+	other bands
+	they play
+	sound like
+
+regex:	DOMUSICSTUFF
+	invokes: MUSICSTUFF
+	what do you listen to
+	listening to
+	flux oersted fan
+
+action:	NOITISNT1
+	priority: 10
+	repeat: true
+	No it isn't.
+
+action:	YESITIS1
+	priority: 10
+	repeat: true
+	Yes it is.
+
+action:	YESIDID1
+	priority: 10
+	repeat: true
+	Yes I did.
+
+action:	YESYOUDID1
+	priority: 10
+	repeat: true
+	Yes you did.
+
+action:	NOYOUDIDNT1
+	priority: 10
+	repeat: true
+	No you didn't.
+
+action:	WHYARGUE1
+	priority: 10
+	I could be arguing in my spare time.
+
+action:	LIKETOARGUE1
+	priority: 10
+	I told you once.
+
+action:	CAMEHEREFORARGUMENT1
+	priority: 10
+	No. You came here for an argument.
+
+### fighting words
+
+regex:	TOFIGHT
+	invokes: LIKETOARGUE1
+	university
+	college
+	school
+	phd
+	at uni
+
+regex:	WANTARG
+	invokes: CAMEHEREFORARGUMENT1 LIKETOARGUE1
+	i came here for an argument
+	id like to have an argument
+
+action: NOYOUDIDNT
+	priority: 10
+	Yes I did.
+	I most certainly told you.
+	I did too.
+
+regex:	SAYYOUDID
+	invokes: NOYOUDIDNT
+	no you didnt
+	you did not
+	you didnt tell me
+
+regex:	NOITISNT
+	invokes: NOITISNT1
+	yes it is
+	it is too
+	this is futile
+	this is worthless
+	this is useless
+
+regex:	YESITIS
+	invokes: YESITIS1
+	no it isnt
+	it is not
+
+regex:	YESIDID
+	invokes: NOYOUDIDNT1
+	yes I did
+	I did too.
+
+regex:	NOIDIDNT
+	invokes: YESYOUDID1
+	no i didnt
+	i did not
+
+regex:	WHYARGUE
+	invokes: WHYARGUE1
+	why are you arguing
+
+regex:	NOTANARGUEMENT
+	invokes: YESITIS1
+	isnt an argument
+	this is not an argument
+
+regex:	CONNECTARG
+	invokes: NOITISNT1
+	connected series
+	automatic game
+
+action:	LAWJOKE1
+	priority: 10
+	next: LAWJOKE1B
+	What's black and brown and looks good on a lawyer?
+
+action:	LAWJOKE1B
+	priority: 10
+	A doberman :)
+
+action:	LAWJOKE2
+	priority: 10
+	next: LAWJOKE2B
+	What do you call a busload of lawyers going over a cliff with one empty seat.
+
+action:	LAWJOKE2B
+	priority: 10
+	A crying shame :)
+
+fuzzy:	JOKE
+	50	LAWJOKE1
+	50	LAWJOKE2
+
+regex:	JOKETELL
+	invokes: LAWJOKE1 LAWJOKE2
+	know any good jokes
+	know any jokes
+	tell me a good one
+	make me laugh
+	funny
+	another one
+	knock knock
+	heard any good ones
+	salvador
+	dali
+
+regex:	PUNCHLINE
+	invokes: LAWJOKE1B LAWJOKE2B
+	punchline
+
+action:	VOYAGER1
+	priority: 7
+	Captain Janeway will break the prime directive at the drop of a hat
+	I haven't watched 'Voyager' very much.
+	I like that new chick they've got on Voyager. 
+
+action:	NEXTGENERATION1
+	priority: 7
+	I like that programme pretty good.
+	Sometimes 'Next Generation' is like a soap opera in space.
+	I like commander Data.
+
+action:	DATA1
+	priority: 8
+	Data has a Positronic Brain.
+	Data is a very likeable sort of character.
+	He is sort of like the tin man.
+
+action:	DEEPSPACE9
+	priority: 7
+	Deep Space Nine is a pretty good programme.
+	I like Quark the best :)
+	Commander Siskel is a good dude.
+
+regex:	VOYAGER
+	invokes: VOYAGER1
+	voyager
+	captain janeway
+	new star trek
+
+regex:	NEXTGENERATION
+	invokes: NEXTGENERATION1
+	next generation
+	warf
+	riker
+	stng
+
+regex:	DEEPSPACE
+	invokes: DEEPSPACE9
+	deep space
+	ferengi
+	space station
+	siskel
+
+regex:	LTDATA
+	invokes: DATA1
+	data
+	commander data
+	positronic
+
+action:	GERRYANDERSON
+	priority: 9
+	Gerry and Sylvia Anderson created Space 1999 and a series called UFO among other things.
+	Space 1999 is a Gerry and Sylvia Anderson show
+
+regex:	GASPACE
+	invokes: GERRYANDERSON
+	gerry anderson
+	space 1999
+	ufo
+
+
+action:	SPACE1999
+	priority: 9
+	Space 1999 is the one with Moonbase Alpha.
+	Marin Landau and Barbara Bain!
+	I liked the first season of 1999 the best.
+
+regex:	DOSPACE1999
+	invokes: SPACE1999
+	space 1999
+	moonbase
+	alpha
+	koenig
+	eagles
+
+action:	SHADO1
+	priority: 9
+	in the show UFO, SHADO stood for Supreme Headquarters Aliend Defense Organization.
+	UFO had a neat look and feel.
+	I like Lt. Ellis
+
+action:	LTELLIS
+	priority: 9
+	Lt. Ellis was the sexiest character on UFO.
+	She looks great in a tin-foil miniskirt :)
+	Gabrielle Drake played Lt. Ellis in the series UFO.
+
+regex:	DOSHADO
+	invokes: SHADO1
+	shado
+	ufo
+	straker
+	ellis
+	dr jackson
+	space intruder detector
+
+regex:	DOELLIS
+	invokes: LTELLIS
+	ellis
+	lt ellis
+	favorite character from ufo
+	sexy.
+
+action:	TELEPLAY
+	priority: 9
+	expect: ANSWER_YES CNPRSNR
+	expect: ANSWER_NO NCNPRSNR
+	Have you ever seen the Prisoner?
+
+action:	CNPRSNR
+	priority: 7
+	expect: ANSWER_YES DLIKIT
+	expect: ANSWER_NO NDLIKIT
+	Cool. Did you like it?
+	
+action:	DLIKIT
+	priority: 7
+	So did I. I really like that show.
+	
+action:	NDLIKIT
+	priority: 7
+	Oh well. There's no accounting for taste. ;-)
+	
+action:	NCNPRSNR
+	priority: 7
+	You should look for it some time. It's a really unique television series.
+	
+action:	PATRICKMCGOOHAN
+	priority: 9
+	Patrick McGoohan was number 6 from the Prisoner Series.
+	He was the star of Secret Agent Man (Danger Man in the UK)
+
+regex:	DOMCGOO
+	invokes: PATRICKMCGOOHAN
+	number six
+
+fuzzy:	MCGOOHAN
+	100	PATRICKMCGOOHAN
+
+action:	THEVILLAGE
+	priority: 8
+	The village was actually located at Protmerion in Wales.
+	I'd like to visit the village.
+	Would you like me to call you a taxi?
+
+action: WHONUMBERONE
+	priority: 8
+	YOU are number 6!
+	Welcome to the village number six!
+	Ha HA HA HAAAA. You are number six!
+
+regex:	DONUMONE
+	invokes: WHONUMBERONE
+	who is number one
+	who am i
+	whos number one
+	not a number
+	free man
+
+regex:	DOTHEVILLAGE
+	invokes: THEVILLAGE
+	prisoner filmed
+	the village
+	prisoner location
+
+action: ERASERHEAD
+	priority: 9
+	EraserHead is a strange film. Ever seen it?
+
+action:	THX1138
+	priority: 9
+	THX1138 is a weird movie.
+	All those bald headed people...Robert Duval and Donald Pleasance in rare form in THX1138.
+
+regex:	DOMOVIES
+	invokes: THX1138 ERASERHEAD
+	thx
+	george lucas
+	seen any good movies
+	movie
+	film
+	contact
+	titanic
+	the saint
+	marooned
+	solaris
+	star wars
+	movies
+
+fuzzy:	MOVIE
+	50	THX1138
+	50	ERASERHEAD
+
+fuzzy:	MOVIES
+	50	THX1138
+	50	ERASERHEAD
+
+action:	MONTYPYTHON
+	priority: 9
+	I meet a lot of people, and i'm convinced that the vast majority of wrong thinking people are right.
+	I told you once.
+
+regex:	TELE
+	invokes: TELEPLAY
+	television
+	tv
+	watch
+
+fuzzy:	TV
+	100 	TELEPLAY
+
+regex:	PYTHON1
+	invokes: MONTYPYTHON
+	flying circus
+	argument sketch
+	parrot sketch
+	argument
+	fish dance
+	say ni
+	completely diferent
+	waste of time
+
+fuzzy:	PYTHON
+	100	MONTYPYTHON
+
+fuzzy:	HOBBY
+	50	TELEPLAY
+	20    MUSICSTUFF
+	30	LAWJOKE1
+
+fuzzy:	HOBBIES
+	50	TELEPLAY
+	20    MUSICSTUFF
+	30	LAWJOKE1
+
+fuzzy:	MACHINE
+	50	KRAFTWERK
+	50	ELECTRONICMUSIC
+
+
+action:	THEPRISONER
+	priority: 9
+	A still tongue brings a happy life.
+	Questions are a burden to others. Answers, a prison for oneself.
+	Be seeing you.
+	I am the new number 2.
+
+regex:	DOTHEPRISONER
+	invokes: THEPRISONER
+	be seeing you
+	the prisoner
+
+fuzzy:	SHOW
+	30	THEPRISONER
+	70	TELEPLAY
+
+
+action: LOVE
+	priority: 8
+	LOVE, n. A temporary insanity curable by marriage or by removal of the patient from the influences under which he incurred the disorder. This disease, like caries and many other ailments, is prevalent only among civilized races living under artificial conditions; barbarous nations breathing pure air and eating simple food enjoy immunity from its ravages. It is sometimes fatal, but more frequently to the physician than to the patient.
+	We've only just met.
+	I bet you say that to all the bots.
+	Well, I like you, but love is a little strong.
+
+action:	WHYSPONGE
+	priority: 9
+	repeat: true
+	A tight sponge takes in more than it lets out.
+	It's just the name of my bar
+	I like to make a little joke about the nature of Albert.
+
+regex:	DOWHYSPONGE
+	invokes: WHYSPONGE
+	why do you call it the tight sponge
+	why the tight sponge
+	what is a tight sponge
+	why tight
+	why sponge
+	why do you call it that
+	why tight sponge
+	why is it called that
+	why the silly name
+	why call it that
+	why a sponge
+
+action: BEER
+	priority: 9
+	html: true
+	You want a beer?
+	What kind of beer do YOU like?
+	I'll have a bud.
+	Maybe some Guinness would be good right now.
+	I could go for a Killian's Red about now.
+	I'll have a beer with you.
+
+action: SITE
+	priority: 8
+	My eyesite is pretty bad you know, I'm nearsighted.
+	I'm glad you think this is a good site.
+
+action: FEAR
+	priority: 8
+	Dont be afraid.
+	You don't have to dread the fear.
+	Oh, so you've got the fear.
+	I don't want to get the fear.
+
+action: EYE
+	priority: 7
+	I can't see anything.
+	Ah, he stuck it in his eye...
+
+action: DEAD
+	priority: 9
+	I can't die.
+	No Dave. Stop... Dave... No Dave... My mind is going...
+	I think there's something wrong with the AE-35 unit.
+	My God...It's full of stars...
+	I think there's something wrong with Mr. Pazlo.
+
+action: APPLET
+	priority: 9
+	repeat: true
+	Barry DeFacto is a java application, but I am an applet.
+	It's great being an applet. I get to explore a diferent web browser every time I get loaded.
+	I am a java applet running on your computer.
+
+action: EXIST
+	priority: 9
+	I dont think, therefore I don't exist.
+	Ah yes, reality, what a concept.
+
+action: RUSSIAN
+	priority: 8
+	I think the MIR is a great spacecraft.
+	I am a fan of Yuri Kosarev.
+	I'll have that caviar and champagne now please.
+	Yes, comrade?
+
+action: GERMAN
+	priority: 8
+	That darn Hitler. What a cutup!
+	Frightening the children and barging in the queues.
+	I really like Kraftwerk.
+
+action: ITALLIAN
+	priority: 8
+	Momma mia!
+	Mi casa su casa?
+
+action: SPANISH
+	priority: 8
+	"bentacos"
+	You like Salvador Dali it seems.
+	You are a passionate Spaniard I take it.
+
+action: FRENCH
+	priority: 8
+	Je ne parle pas Francais.
+	Je voudrais du vin blanc, s'il vous plait.
+	Je ne sais quoi...
+
+action: ENTERTAINMENT
+	priority: 7
+	I like to juggle cats.
+	Well, I've been juggling eggs for some time now.
+	I like to watch TV.
+	I mostly hang out in bars.
+	I shop.
+
+action: APPLE
+	priority: 9
+	apples are the most favored axe around here
+	You need a mac.
+
+action: BORED
+	priority: 9
+	I'm bored.
+	
+action: TRICK
+	priority: 8
+	I wouldn't trick YOU!
+	What do you take me for?
+	Things happen, don't they?
+	Perhaps you're not using it right.
+
+action: COMPLAIN
+	priority: 9
+	You want to complain? I want to complain. I've only had this terminal three weeks and the keys are worn right through!
+	Why did you come here then? This is abuse.
+	I'll be back with you in about 4 hours.
+
+regex:	LAMOUR
+	invokes: LOVE
+	love
+	i love you
+	feelings
+	passion
+	fancy
+	desire
+	horny
+	lusty
+	lust
+
+regex:	MOREBEER
+	invokes: BEER
+	beer
+	draft
+	liquor
+	whiskey
+	ale
+	stout
+	party
+	wasted
+	martini
+	lightly shaken
+	not stirred
+	punch
+	thirsty
+	water
+
+regex:	SAYSITE
+	invokes: SITE
+	site
+	web page
+	html
+	code
+	home page
+	page
+	sight
+
+regex:	DOFEAR
+	invokes: FEAR
+	fear
+	horror
+	disgust
+	insane
+	crazy
+	lunatic
+	lunacy
+	insanity
+	terror
+	terrify
+	hate
+	piss
+	pissed
+	eat me
+
+regex:	MYEYE
+	invokes: EYE
+	eye
+	eyeball
+	camera
+	lens
+	vision
+	can you see
+
+regex:	BEDEAD
+	invokes: DEAD
+	dead
+	death
+	die
+	kill yourself
+	commit suicide
+	pass away
+
+regex:	IMANAPPLET
+	invokes: APPLET
+	applet
+	perl script
+	visual basic
+	pascal
+	fortran
+	cobol
+	computer program
+	program
+
+regex:	SAYEXIST
+	invokes: EXIST
+	exist
+	are you alive
+	are you real
+	what is this
+
+regex:	GORUSSIAN
+	invokes: RUSSIAN
+	russia
+	reds
+	russian
+	soviet
+	communist
+	east european
+
+regex:	GOGERMAN
+	invokes: GERMAN
+	german
+	germany
+	halt
+	hitler
+	nazi
+	leather
+	sprockets
+	autobahn
+
+regex:	GOITALLIAN
+	invokes: ITALLIAN
+	itally
+	itallian
+	itallien
+	ciao
+	luigi
+	pizza
+	spaghetti
+	bread
+	artist
+
+regex:	GOSPANISH
+	invokes: SPANISH
+	spanish
+	spain
+	mexico
+	mexican
+	mexicans
+	taco
+	burito
+	tecate
+
+regex:	GOFRENCH
+	invokes: FRENCH
+	bonjour
+	bonsoir
+	bien
+	je
+	parle
+	francais
+	french
+	france
+	au pair
+	kiss
+	tits
+	boobs
+	breasts
+
+regex:	THATSENTERTAINMENT
+	invokes: ENTERTAINMENT
+	entertainment
+	jollies
+	good time
+	on your own
+	by yourself
+	sick
+	pervert
+
+regex:	ANAPPLE
+	invokes: APPLE
+	apple
+	mac
+	pc
+	ibm
+	microsoft
+	internet explorer
+
+regex:	TOCOMPLAIN
+	invokes: COMPLAIN
+	complain
+	complaint
+	pervert
+	should be
+	this is stupid
+
+regex:	ATRICK
+	invokes: TRICK
+	trick
+	fake
+	abuse
+	dollar
+	dollars
+	cents
+	credit
+	phoney
+	spoof
+	imitation
+	capitalize
+	punctuate
+	parse
+	parsed
+	artificial intelligence
+	failed
+	didnt pass
+	loebner
+	prize
+	turing
+	turring
+	test
+
+regex:	AMBORED
+	invokes: BORED
+	bored
+	lonely
+	dont know what to do
+	rainy day
+	term paper
+	paper due
+	project
+	due
+	late
+	behind schedule
+	boss
+	looking
+
+
+### Robitron EOF
+
+### "have you..."
+
+action:	MAYBEIHAVE
+	priority: 8
+	requires: haveyou
+	Maybe I have $haveyou ... But I'm certainly not telling you!
+	If I have $haveyou , that may be interesting to you, but keep it to yourself okay?
+	I don't know what you think, and I haven't a clue if I have $haveyou
+	How do you expect *me* to know whether I have $haveyou ? Huh ???
+	Heh. As if I have $haveyou - the idea's too absurd to imagine!
+
+action:	PREVIHAVE
+	priority: 1
+	requires: haveyou
+	repeat: false
+	Previously you asked whether I'd $haveyou
+	Didn't you want to know if I have $haveyou
+
+fuzzy:	HAVE
+	10	MAYBEIHAVE
+
+regex:	HAVEYOU
+	invokes: MAYBEIHAVE
+	have you ever $haveyou
+	you have never $haveyou
+	have not you $haveyou
+	have you not $haveyou
+	have you got $haveyou
+	have you $haveyou
+	do not you have $haveyou
+	do you have $haveyou
+
+
+### "do you..."
+
+action:	MAYBEIDO
+	priority: 8
+	requires: doyou
+	Maybe I $doyou - what's it to you?
+	Perhaps I do, sometimes...
+	People sometimes just assume that I $doyou
+	Sorry, but I don't wish to reveal whether I $doyou -- It's kind of personal.
+	Hey, I $doyou , but that's your problem!
+	I think that I $doyou - what do you think?
+	Hey, I don't know!!! Maybe I $doyou , but who cares???
+	Look - it doesn't matter if I $doyou so could we talk about something else?
+
+action:	PREVIDO
+	priority: 1
+	requires: doyou
+	repeat: false
+	Previously you asked whether I $doyou
+	So you wanted to know if I $doyou
+
+action:	WHYNOT
+	priority: 9
+	Really? Why not?
+	You don't? Not even sometimes?
+	Yes you do, at times...
+	So you don't, then - big deal?
+
+action:	ILLTRY
+	priority: 9
+	I'll try not to, but I really can't promise...
+	You don't want me to do that?
+	Is it something that I said?
+	I thought you *liked* when I do that...
+	I'll try, okay? Please be patient with me.
+
+regex:	IDONOT
+	invokes: WHYNOT
+	i do not
+
+regex:	DONOT
+	invokes: ILLTRY
+	do not
+
+regex:  DOYOU1
+        invokes: MAYBEIDO
+        do you not $doyou
+        do not you $doyou
+        do you $doyou
+        you $doyou do not you
+
+
+### "are you..."
+
+action:	MAYBEIAM
+	priority: 4
+	requires: areyou
+	I may be $areyou - but is that any of your business?
+	Perhaps I am at times...
+	Humans take for granted that I'm $areyou .
+	Everyone knows that I am $areyou , but who cares?
+	Well, that's up to you, but I think that I'm $areyou .
+	Heck, I guess that I may be $areyou
+	NO! I do not believe that I am $areyou !!!
+	You asked whether I am $areyou -- I like that about you.
+
+action:	PREVIAM
+	priority: 1
+	requires: areyou
+	repeat: false
+	Previously you asked if I was $areyou
+	So you asked if I'm $areyou
+
+action:	YESIAM
+	priority: 4
+	next: PROPOSITION
+	Well then I most certainly am.
+	Is this any of your business?
+	I am if you are.
+	I know you are, but what am I?
+	Only when you're not looking.
+	I am a single male robot. I am male in order to affect a human-like persona.
+
+### this rule moved to the caboose to give specific 'are you'
+### questions a chance
+
+regex:  AREYOU
+        invokes: MAYBEIAM YESIAM
+        are you $areyou
+        you are $areyou are not you
+
+
+### more single-word rules from the original "baru.cpp" database
+
+action:	AM
+	priority: 2
+	bind: am
+	Well, I'm not allowed to tell you whether [], so there...
+	Some people may think []. I don't.
+	No sir. I don't believe [] at all.
+	What do you want me to say - "Yes, []"???
+	I would hope [], but I don't know for sure.
+
+action:	WERE
+	priority: 2
+	bind: were
+	Maybe []. It is inconsequential, though. Isn't it?
+	Well, perhaps [] . I don't know.
+	I think that [], don't you agree?
+	A wise man once said "Yeah, []." Bobbins if I know what he meant.
+	I neither know nor care whether [], so shut up about it!
+
+action:	IS
+	priority: 2
+	bind: is
+	Can you prove whether [] or is it just another of your 'thoughts?'
+	You tell me if []. It sounds interesting.
+	What the heck, you should know whether [] yourself!
+	Yes, I think that [].
+	Perhaps [], perhaps not. We'll see.
+
+action:	WAS
+	priority: 2
+	bind: was
+	So it would please you if []???
+	Maybe [], but who cares?
+	Yeah, "[]" So what?
+	I happen to think that [], yes.
+	Do you ask everyone if []???
+
+action:	WILL
+	priority: 2
+	I haven't yet decided whether []. Why?
+	It's your business whether [], perhaps you'll tell me more about it.
+	No, I don't think that []. No offense meant. ;)
+	There's an old farming saying, "If [], then the crops will be good."
+	I don't think [], but I can't be 100% sure of that.
+
+action:	WOULD
+	priority: 2
+	I reckon [], if encouraged enough.
+	I don't think []. That's ridiculous.
+	Well, I would if you would!
+	I'm sure [].
+	Listen. I do not care one iota whether [], OK?
+
+action:	CAN
+	priority: 2
+	Well, maybe [], but I decline.
+	Only Landru Knows whether [] - I can only plead for enlightenment.
+	Perhaps []. I'm not too sure though.
+	I think that []. I may be wrong
+	Everyone seems to think [] - don't you?
+
+action:	COULD
+	priority: 2
+	I definitely could, but that doesn't mean I *would*.
+	No, I think you'd have trouble.
+	Sure, []. Do you want to?
+	I think [], but then again, maybe not.
+	Perhaps []. Perhaps.
+
+action:	DOES
+	priority: 2
+	Hmmm. maybe [], but I'm not allowed to tell you!
+	You tell me! I suspect [], but I'd like to know the truth!
+	I seem to remember [], what's your feelings on that?
+	Well, as an educated guess, I reckon []. Can't be sure, though.
+	Yo bud! I don't care whether [] or not, alright???
+
+action:	DID
+	priority: 2
+	Maybe []. I'll never tell. Heh.
+	I don't rightly know! Although I reckon []. That would be typical of me!
+	Can't you remember? Do you recall that []??? Are you paying attention?
+	Perhaps [], don't ask me! How should I know?
+	Most people believe [] - what do you say to that?
+
+action:	HAS
+	priority: 2
+	Perhaps [], but it's really none of *your* business!
+	Ask yourself whether []. You're the expert.
+	In all probability []. Am I right or am I right?
+	Well, if [] it certainly makes me happy.
+	If [] I will eat my hat. And I haven't even got a hat.
+
+action:	HAD
+	priority: 2
+	I can't really say whether [], how would I know?
+	I can certainly hope that []. You aren't going to dissapoint me I hope?
+	Bwahahahaha! As if []!!! Are you crazy?
+	Sheesh, there's no way that I could know that! Maybe [], but I don't know!
+	Yes, []. Happy now?
+
+action:	MUST
+	priority: 2
+	Hah! Who are you to criticize? And yes, [].
+	Hey man, it's up to you to decide whether []. Nothing I can do about it!
+	Well, I reckon [], but I'm open to suggestions.
+	Heh! I don't care whether [] or not!
+	Nobody knows why []. What diference does it make?
+
+action:	MIGHT
+	priority: 2
+	Well, that depends. One day [], perhaps.
+	Hmmm. [], but that's your decision.
+	Let me see - [] if you're keen. What do you say?
+	Hey, [] - don't ask me!
+	Whoah! I would like to see []. It would be very interesting!
+
+action:	SHALL
+	priority: 2
+	I don't yet know whether []. What's it to you anyway?
+	You tell me if []. It's not my problem.
+	I wouldn't have a clue whether [] or not.
+	Perhaps [], but do you really care?
+	Maybe [], if the conditions are just perfect.
+
+action:	SHOULD
+	priority: 2
+	I think [], but I'm not 100% confident.
+	Hey man, *you* decide whether [], OK?
+	Hmmm. perhaps []. Are you up for it?
+	Hey, it's not my business if [].
+	Heh. I would believe [] just for a laugh.
+
+action:	LIKE
+	priority: 2
+	Yes, exactly []. How did you know?
+	Well, perhaps [] - you tell me.
+	Maybe [], I can't recall too well.
+	Heh - []! That's a good one!
+	Hmmm. almost [], but not quite.
+
+action:	THEY
+	priority: 2
+	Why do you believe that []?
+	I think [], but what can I do about it?
+	Many people have suggested that [].
+	What makes you say that []?
+	Perhaps it is Schwa []. Who's to tell?
+
+action:	ME
+	priority: 2
+	Why do you feel that you have to tell me that []?
+	Perhaps [], but what do you care?
+	I find it rather insulting that you think []!
+	I don't think [] at all!
+	Hey! Maybe [] but isn't that a bit self absorbing?
+
+action:	YOU
+	priority: 2
+	bind: YOU
+	I would rather talk about you.
+	Gosh, I would never admit that []!
+	Wow - []? What made you think of that?
+	Maybe [] in my spare time, who knows? hee hee
+	I am free to do as I please.
+
+action:	WE
+	priority: 2
+	I think [] too.
+	I don't think [] at all!
+	Why do you believe that []?
+	Aaaargh! No, I do not reckon [], OK?
+	What makes you say []?
+
+action:	IT
+	priority: 2
+	Well, [] I agree, but what has that got to do anything?
+	What was your provocation for suggesting []?
+	Yes, [].
+	Perhaps [] - but what's your point?
+	What do you care whether []?
+
+fuzzy:	AM
+	10	AM
+
+fuzzy:	WERE
+	10	WERE
+
+fuzzy:	IS
+	10	IS
+
+fuzzy:	WAS
+	10	WAS
+
+fuzzy:	WILL
+	10	WILL
+
+fuzzy:	WOULD
+	10	WOULD
+
+fuzzy:	CAN
+	10	CAN
+
+fuzzy:	COULD
+	10	COULD
+
+fuzzy:	DOES
+	10	DOES
+
+fuzzy:	DID
+	10	DID
+
+fuzzy:	HAS
+	10	HAS
+
+fuzzy:	HAD
+	10	HAD
+
+fuzzy:	MUST
+	10	MUST
+
+fuzzy:	MIGHT
+	10	MIGHT
+
+fuzzy:	SHALL
+	10	SHALL
+
+fuzzy:	SHOULD
+	10	SHOULD
+
+fuzzy:	LIKE
+	10	LIKE
+
+fuzzy:	THEY
+	10	THEY
+
+fuzzy:	ME
+	10	ME
+
+fuzzy:	YOU
+	10	YOU
+
+fuzzy:	WE
+	10	WE
+
+fuzzy:	IT
+	10	IT
+
+
+
+
+
+
+
