@@ -24,6 +24,7 @@
 ###  repeat	can repeat immediately after being invoked
 ###  expect	uses branching logic
 ###  response	lists types of responses
+###
 ### Caveats:
 ###  each ruleset needs to have at least one action rule
 ###  and one intro rule to be able to load.
@@ -525,10 +526,8 @@ regex:	DOKNOWALICE
 
 action:	BONESTALK1
 	priority: 9
-	html: true
 	repeat: false
-	setvar: had.bones
-	Dr. McCoy walks into the room and says:" Dammit, I'm a doctor, not a mechanic!  This entity may look like he's trying to talk with you, but I'll wager a bottle of Romulan ale that this machine is just trying to get you to play a chess game with it. But you have to be PERSISTENT."
+	Dr. McCoy walks into the room and says:" Dammit, I'm a doctor, not a mechanic! This entity may look like he's trying to talk with you, but I'll wager a bottle of Romulan ale that this machine is just trying to get you to play a chess game with it. But you have to be PERSISTENT."
 
 
 regex:	CALLBONES
@@ -1290,7 +1289,7 @@ action:	IKNOWNEUROMANCER
 	priority: 9
 	The sky above the port was the colour of cable television, tuned to the Weather Channel...
 	Why does it seem like you're covered in electric neon origami?
-	Have you seen Molly lately?  I owe her a couple of bucks.
+	Have you seen Molly lately? I owe her a couple of bucks.
 
 fuzzy:	NEUROMANCER
 	100	IKNOWNEUROMANCER
@@ -2508,16 +2507,16 @@ fuzzy:	KKOOL
 ###
 
 action: WEARING
-        priority: 9
+	priority: 9
 	Isn't that a bit personal?
 	I'm wearing my favourite dress.
 	I'm wearing a lab coat.
 
-regex:  DOWEARING
-        invokes: WEARING
-        wearing
-        you look like
-        have you got on
+regex:	DOWEARING
+	invokes: WEARING
+	wearing
+	you look like
+	have you got on
 
 
 action:	WEATHER1
@@ -2718,7 +2717,7 @@ action:	SPANINQUIS
 	Nobody expects the spanish inquisition!
 
 regex:	DOSPANINQ
-	invokes SPANINQUIS
+	invokes: SPANINQUIS
 	expect the spanish inquisition
 	i didnt expect
 
@@ -2742,6 +2741,7 @@ action:	WHOTHEM
 	You know, THEM.
 
 regex:	SAYWHOTHEM
+	invokes: WHOTHEM
 	who are they
 	they who
 	who is they
@@ -3323,7 +3323,7 @@ regex:	SHOWRG
 	show it
 	my thing
 
-regex:  SEEME
+regex:	SEEME
 	invokes: LOOKSLIKE
 	see me
 	looks like
@@ -3421,7 +3421,7 @@ action:	ANTIPICARD
 	Picard is okay.
 
 regex:	ABOUTPICARD
-        invokes: ANTIPICARD PROKIRK
+	invokes: ANTIPICARD PROKIRK
 	jean luc picard
 	captain picard
 	picard
@@ -3524,9 +3524,18 @@ regex:	ABOUTSPOCK
 	first officer
 	science officer
 
+action:	PROKIRK
+	priority: 7
+	Kirk is the best captain.
+	Kirk always gets out of a jam.
 
 regex:	ABOUTKIRK
-
+	invokes: PROKIRK
+	captain
+	captain kirk
+	james t kirk
+	jim kirk
+	kirk
 
 regex:	NOTTREKKIE
 	invokes: ISTREKKIE
@@ -4214,12 +4223,12 @@ fuzzy:	PYTHON
 
 fuzzy:	HOBBY
 	50	TELEPLAY
-	20    MUSICSTUFF
+	20	MUSICSTUFF
 	30	LAWJOKE1
 
 fuzzy:	HOBBIES
 	50	TELEPLAY
-	20    MUSICSTUFF
+	20	MUSICSTUFF
 	30	LAWJOKE1
 
 fuzzy:	MACHINE
@@ -4274,7 +4283,6 @@ regex:	DOWHYSPONGE
 
 action: BEER
 	priority: 9
-	html: true
 	You want a beer?
 	What kind of beer do YOU like?
 	I'll have a bud.
@@ -4677,12 +4685,12 @@ regex:	DONOT
 	invokes: ILLTRY
 	do not
 
-regex:  DOYOU1
-        invokes: MAYBEIDO
-        do you not $doyou
-        do not you $doyou
-        do you $doyou
-        you $doyou do not you
+regex:	DOYOU1
+	invokes: MAYBEIDO
+	do you not $doyou
+	do not you $doyou
+	do you $doyou
+	you $doyou do not you
 
 
 ### "are you..."
@@ -4719,10 +4727,10 @@ action:	YESIAM
 ### this rule moved to the caboose to give specific 'are you'
 ### questions a chance
 
-regex:  AREYOU
-        invokes: MAYBEIAM YESIAM
-        are you $areyou
-        you are $areyou are not you
+regex:	AREYOU
+	invokes: MAYBEIAM YESIAM
+	are you $areyou
+	you are $areyou are not you
 
 
 ### more single-word rules from the original "baru.cpp" database

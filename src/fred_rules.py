@@ -71,8 +71,8 @@ class Rules (object):
                         phrase_tuple = tuple(self.lang.parse(phrase))
                         self.regex_phrases[phrase_tuple] = invoked
 
-                except KeyError, e:
-                    print "ERROR: references unknown action rule", e
+                except KeyError as e:
+                    print("ERROR: references unknown action rule", e)
                     sys.exit(1)
 
 
@@ -111,7 +111,7 @@ class Rules (object):
 
         response = ""
 
-        if random.random < 0.03:
+        if random.random() < 0.03:
             response = choice(self.intro_rules).fire()
 
         # 2. "Fred.chooseReply()"
@@ -240,6 +240,7 @@ class Rule (object):
         rule_dict = {}
         first_action = None
         fuzzy_dict = {}
+        line_number = 0
 
         with open(filename, "r") as f:
             rule_lines = []
@@ -254,7 +255,7 @@ class Rule (object):
                         try:
                             rule = Rule.parse_lines(rule_lines)
                         except ParseError:
-                            print "ERROR: cannot parse rule description", rule_lines
+                            print("ERROR: cannot parse rule description", line_number, rule_lines)
                             sys.exit(1)
                         else:
                             if isinstance(rule, FuzzyRule):
@@ -268,6 +269,8 @@ class Rule (object):
                     rule_lines = []
                 else:
                     rule_lines.append(line)
+
+                line_number += 1
 
         return Rules(lang, rule_dict, first_action, fuzzy_dict)
 
@@ -400,5 +403,5 @@ class FuzzyRule (Rule):
 
 if __name__=='__main__':
     rule_dict, first_action = Rule.parse_file(sys.argv[1])
-    print len(rule_dict)
-    print first_action
+    print(len(rule_dict))
+    print(first_action)

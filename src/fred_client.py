@@ -26,7 +26,7 @@ import socket
 
 class Convo (object):
     def converse (self, response):
-        return raw_input(response)
+        return input(response)
 
 
 class TCPConvo (Convo):
@@ -57,10 +57,10 @@ class FRED (object):
             except EOFError:
                 break
             else:
-                print utterance
+                print(utterance)
 
                 response, selected_rule, weight = self.rules.choose_rule(utterance)
-                print " (", selected_rule.name, weight, ")"
+                print(" (", selected_rule.name, weight, ")")
 
 
     def chat_tcp (self, port):

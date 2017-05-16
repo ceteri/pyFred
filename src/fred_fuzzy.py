@@ -87,4 +87,4 @@ class FuzzyUnion (object):
 
 if __name__=='__main__':
     fuzzy = Fuzzy()
-    print fuzzy
+    print(fuzzy)

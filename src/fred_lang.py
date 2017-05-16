@@ -75,4 +75,4 @@ class Language (object):
 
 if __name__=='__main__':
     lang = Language()
-    print lang.parse("Hi there Fred.")
+    print(lang.parse("Hi there Fred."))
