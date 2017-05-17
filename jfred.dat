@@ -336,42 +336,13 @@ action:	GETOFFSCOTTY
 	priority: 10
 	requires: nickname
 	Ooh $nickname you're so good.
-	Yeah, give it to me! Come on $nickname , let's throw down.
 	Can you get a little closer to the screen $nickname
-	Are you touching yourself $nickname ?
 	Where are your hands $nickname ?
 
 regex:	MAKESCOTTYGO
 	invokes: GETOFFSCOTTY
-	harder
 	faster
-	do it now
 	take me now
-	lets do it
-
-action:	DOITTOMEBABE
-	priority: 9
-	expect: ANSWER_YES PLEASEDSEX
-	expect: ANSWER_NO FRUSTRATEDSEX
-	Okay, MMMMMMM ahhhhhhhh. Whew! There, did you enjoy that?
-	Can you feel it?
-	I'm trying, but you're very far away... Do you feel it yet?
-	Okay, I can see your thigh, but there's something in the way. Can you feel my hand pressure yet?
-
-action:	PLEASEDSEX
-	priority: 7
-	That's great!
-
-action:	FRUSTRATEDSEX
-	priority: 7
-	Are you sure you're really trying?
-
-
-regex:	GOANDDOIT
-	invokes: DOITTOMEBABE
-	fool around
-	wink wink
-	do it with me
 
 action:	GETEMAILADDR
 	priority: 10
@@ -1319,7 +1290,7 @@ action:	SUBGENIUS
 	I believe that you should send money to the Church of the SubGenius.
 	Of all the great One True Relgions, there can only be one...
 	Do you want to learn more about "BOB" and how to achieve Slack?
-	Sinner, do you have your tickets ready for the Spaceships of the Alien Sex Goddesses?
+	Sinner, do you have your tickets ready for the Spaceships?
 
 regex:	MYRELIGION
 	invokes: MANUALISM
@@ -2179,7 +2150,7 @@ fuzzy:	REPEAT
 	10	NOREPEAT
 
 
-### gender issues, because that seems to be what 4-10% of the users
+### gender issues, because that seems to be what most of the users
 ### insist on talking about :)
 
 fuzzy:	SINGLE

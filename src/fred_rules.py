@@ -46,8 +46,8 @@ class Rules (object):
 
         self.fuzzy_sets = {}
 
-        for (name, r) in fuzzy_dict.items():
-            self.fuzzy_sets[name] = map(lambda x: (self.rule_dict[r.members[x]], r.weights[x]), range(0, len(r.members)))
+        for name, r in fuzzy_dict.items():
+            self.fuzzy_sets[name] = list(map(lambda x: (self.rule_dict[r.members[x]], r.weights[x]), range(0, len(r.members))))
 
         # 2. randomly shuffle the order of responses within all the
         # action rules, and establish priority rankings (later)
@@ -112,7 +112,7 @@ class Rules (object):
         response = ""
 
         if random.random() < 0.03:
-            response = choice(self.intro_rules).fire()
+            response = random.choice(self.intro_rules).fire()
 
         # 2. "Fred.chooseReply()"
         # based on key words from the input stream
@@ -395,7 +395,7 @@ class FuzzyRule (Rule):
             self.weights.append(weight)
 
         sum_weight = sum(self.weights)
-        self.weights = map(lambda x: x / sum_weight, self.weights)
+        self.weights = list(map(lambda x: x / sum_weight, self.weights))
         self.vector = []
 
         return self
